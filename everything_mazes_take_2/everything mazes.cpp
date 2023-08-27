@@ -27,8 +27,9 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Mazes!");
 
-    grid.recursiveBacktrackingMaze();
+    //grid.recursiveBacktrackingMaze();
     //grid.primsMaze();
+    grid.kruskalsMaze();
 
 
     std::shared_ptr<BaseRobot> robot0 = std::make_shared<BaseRobot>(grid);
