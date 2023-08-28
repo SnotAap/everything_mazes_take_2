@@ -343,27 +343,30 @@ void Grid::kruskalsMaze()
 	std::list<cordinates> startingtiles;
 	std::map<cordinates, std::shared_ptr<MazeNode>> nMap;
 
+	int tester = 0;
+
 	int rX = rand() % sizeX;
 	int rY = rand() % sizeY;
 	cordinates rStartCord = std::pair<int, int>(std::make_pair(rX, rY));
 	tileMap[rStartCord]->inList = true;
 	tileMap[rStartCord]->shape.setFillColor(sf::Color::Red);
 
-	std::list<std::list<std::shared_ptr<Tile>>> mainlist;
-	std::list <std::list<std::shared_ptr<Tile>>> ::iterator basedTile;
-	basedTile = mainlist.begin();
+	std::vector<std::vector<std::shared_ptr<Tile>>> mainVector;	
 
-	std::list<std::shared_ptr<Tile>> pathList;
-	pathList.push_front(tileMap[rStartCord]);
-	mainlist.push_front(pathList);
+	std::vector <std::vector<std::shared_ptr<Tile>>> ::iterator basedTile;
+	basedTile = mainVector.begin();
+
+	std::vector<std::shared_ptr<Tile>> pathVector;
+	pathVector.push_back(tileMap[rStartCord]);
+	mainVector.push_back(pathVector);
 
 	int yOpening = rand() % sizeY;
 	cordinates openingEnd = std::pair<int, int>(std::make_pair(sizeX - 1, rY));
 	wallMap[openingEnd][East]->active = false;
 	cordinates opening = std::pair<int, int>(std::make_pair(0, yOpening));
 	wallMap[opening][West]->active = false;
-
-	for (int i = 0; i < 50; i++)
+	
+	for(int i = 0; i < 240; i++)
 	{
 		cordinates pickedTile = std::pair<int, int>(std::make_pair(rand() % sizeX, rand() % sizeY));
 		/*if (tileMap[pickedTile]->inList == true)
@@ -435,23 +438,6 @@ void Grid::kruskalsMaze()
 			randW = rand() % 4;
 		}
 
-		/*pickedTile-> inList == true && neighbors-> inList == true
-		*merge lists
-		* remove wall*/
-
-		/*pickedTile-> inList == true && neighbors-> inList == fasle
-		* add neighbor to list
-		* remove wall*/
-
-		/*pickedTile-> inList == false && neighbors-> inList == true
-		* add pickedTile to list
-		* remove wall*/
-
-		/*pickedTile-> inList == false && neighbors-> inList == false
-		* creat list and add both
-		* remove wall*/
-
-
 		/*if (tileMap[pickedTile]->neighbors[randW]->listtileMap[pickedTile]->neighbors[randW]->inList == true)
 		{
 			wallMap[pickedTile][randW]->active = false;
@@ -468,13 +454,51 @@ void Grid::kruskalsMaze()
 
 			if (tileMap[pickedTile]->neighbors[randW]->inList == true)
 			{
-				//merge lists
+				//merge lists	
+				int pickedV1;
+				int pickedV2;
+				for (int i = 0; i < mainVector.size(); i++)
+				{
+					for (int j = 0; j < mainVector[i].size(); j++)
+					{
+						if (mainVector[i][j] == tileMap[pickedTile])
+						{
+							pickedV1 = i;
+						}
+					}
+				}
+				for (int i = 0; i < mainVector.size(); i++)
+				{
+					for (int j = 0; j < mainVector[i].size(); j++)
+					{
+						if (mainVector[i][j] == tileMap[pickedTile]->neighbors[randW])
+						{
+							pickedV2 = i;
+							for (int j = 0; j < mainVector[pickedV2].size(); j++)
+							{
+								mainVector[pickedV1].push_back(mainVector[pickedV2][j]);
+							}
+						}
+					}
+				}
+				mainVector[pickedV2].clear();
+				tileMap[pickedTile]->shape.setFillColor(sf::Color::Magenta);
 				wallMap[pickedTile][randW]->active = false;
 			}
 			else
 			{
 				//add to list
-				tileMap[pickedTile]->inList = true;
+				for (int i = 0; i < mainVector.size(); i++)
+				{
+					for (int j = 0; j < mainVector[i].size(); j++)
+					{
+						if (mainVector[i][j] == tileMap[pickedTile])
+						{
+							mainVector[i].push_back(tileMap[pickedTile]->neighbors[randW]);
+						}
+					}
+				}
+				tileMap[pickedTile]->neighbors[randW]->inList = true;
 				wallMap[pickedTile][randW]->active = false;
 			}
 
@@ -485,23 +509,34 @@ void Grid::kruskalsMaze()
 			if (tileMap[pickedTile]->neighbors[randW]->inList == true)
 			{
 				//join list
-
+				for (int i = 0; i < mainVector.size(); i++)
+				{
+					for (int j = 0; j < mainVector[i].size(); j++)
+					{
+						if (mainVector[i][j] == tileMap[pickedTile]->neighbors[randW])
+						{
+							mainVector[i].push_back(tileMap[pickedTile]);
+						}
+					}
+				}
 				tileMap[pickedTile]->inList = true;
 				wallMap[pickedTile][randW]->active = false;
 
 			}
 			else
 			{
-				//make list
-				std::list<std::shared_ptr<Tile>> myList;
-				myList.push_back(tileMap[pickedTile]);
-				myList.push_back(tileMap[pickedTile]->neighbors[randW]);
+				//make list		
+				std::vector<std::shared_ptr<Tile>> myVector;
+				mainVector[tester].push_back(tileMap[pickedTile]);
+				mainVector[tester].push_back(tileMap[pickedTile]->neighbors[randW]);
+				mainVector.push_back(myVector);
 				tileMap[pickedTile]->inList = true;
 				tileMap[pickedTile]->neighbors[randW]->inList = true;
 				wallMap[pickedTile][randW]->active = false;
+				tester++;
 			}
-		}
-	}	
+		}		
+	}		
 }
 
 bool Grid::removeWalls(microTime deltaTime)
