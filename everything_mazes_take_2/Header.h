@@ -21,6 +21,7 @@
 #include "Wall.h"
 #include "CustomTypes.h"
 #include "Tile.h"
+#include "Node.h"
 #include "Grid.h"
 #include "PathFinding.h"
 #include "Robot.h"

@@ -57,13 +57,14 @@ int main()
             {
                 state++;
             }
+            //pathSolvingAStar(grid);
             break;
         case solveState:
             
-            if (robot0->gridPos != grid.startAndEndCords.second)
-            {
-                robot0->movement(grid, deltaTime);
-            }
+            //if (robot0->gridPos != grid.startAndEndCords.second)
+            //{
+            //    robot0->movement(grid, deltaTime);
+            //}
             
             if (robot1->gridPos != grid.startAndEndCords.second)
             {
