@@ -68,7 +68,8 @@ void Robot0::setupNodeMap(Grid grid)
 			std::shared_ptr<Node> myneighbors[4] = { northNeighbor, eastNeighbor, southNeighbor, westNeighbor };
 			for (int i = 0; i < 4; i++)
 			{
-				nodeMap[myCords]->neighbors[i] = myneighbors[i];
+				//nodeMap[myCords]->neighbors[i] = myneighbors[i];
+				nodeMap[myCords]->setNeighbor(i, myneighbors[i]);
 			}
 		}
 	}
@@ -84,12 +85,12 @@ int Robot0::floodFillGetDirection(Grid grid)
 		//
 		for (int i = 0; i < accesibleTiles.size(); i++)
 		{
-			if (nodeMap[*currentTile]->neighbors[accesibleTiles[i]] != nullptr)
+			if (nodeMap[*currentTile]->getNeighbor(accesibleTiles[i]) != nullptr)
 			{
-				if (nodeMap[*currentTile]->neighbors[accesibleTiles[i]]->visited == false)
+				if (nodeMap[*currentTile]->getNeighbor(accesibleTiles[i])->visited == false)
 				{
 		
-						possibleMoves.emplace_back(nodeMap[*currentTile]->neighbors[accesibleTiles[i]]->gridPos);
+						possibleMoves.emplace_back(nodeMap[*currentTile]->getNeighbor(accesibleTiles[i])->position);
 						possibleDirections.emplace_back(accesibleTiles[i]);
 				}
 			}
