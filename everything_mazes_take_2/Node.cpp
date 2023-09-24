@@ -86,19 +86,19 @@ AStarNode::AStarNode(int xPos, int yPos) : Node(xPos, yPos)
 int AStarNode::getSide(std::shared_ptr<AStarNode> neighbor)
 {
 	int side = -1;
-	if (position.first > neighbor->position.first)
+	if (position.first < neighbor->position.first)
 	{
 		side = East;
 	}
-	if (position.first < neighbor->position.first)
+	if (position.first > neighbor->position.first)
 	{
 		side = West;
 	}
-	if (position.second < neighbor->position.second)
+	if (position.second > neighbor->position.second)
 	{
 		side = North;
 	}
-	if (position.second > neighbor->position.second)
+	if (position.second < neighbor->position.second)
 	{
 		side = South;
 	}
