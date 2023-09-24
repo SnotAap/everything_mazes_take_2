@@ -4,8 +4,8 @@ std::vector<std::shared_ptr<Object>> renderList;
 std::vector<cordinates> expressedwallMap;
 
 std::vector<cordinates> path;
-int sizeX = 20;
-int sizeY = 20;
+int sizeX = 50;
+int sizeY = 25;
 
 #define generateState 0
 #define solveState 1
@@ -48,31 +48,39 @@ int main()
         //
         currentTime = getMicroTime();
         deltaTime = currentTime - lastTime;
-        
         //
         switch (state)
         {
         case generateState:
-            if (grid.removeWalls(deltaTime))
+            //if (grid.removeWalls(deltaTime))
+            //{                
+            //    state++;
+            //} 
+            if (grid.devRemoveWalls())
             {
                 state++;
             }
-            //pathSolvingAStar(grid);
             break;
         case solveState:
             
-            //if (robot0->gridPos != grid.startAndEndCords.second)
-            //{
-            //    robot0->movement(grid, deltaTime);
-            //}
-            
+            if (robot0->gridPos != grid.startAndEndCords.second)
+            {
+                robot0->movement(grid, deltaTime);
+            }            
             if (robot1->gridPos != grid.startAndEndCords.second)
             {
                 robot1->movement(grid, deltaTime);
             }
+            else
+            {
+               pathSolvingAStar(grid, renderList);
+               state++;
+            }
+
             break;
         case solvedState:
-
+            
+            
             break;
 
 
