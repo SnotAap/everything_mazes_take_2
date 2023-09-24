@@ -17,3 +17,26 @@ Line::Line(float xPos_, float yPos_, float xSize_, float ySize_, float rotation_
 	shape.setFillColor(color);
 
 }
+
+Line::Line(sf::Vector2f line1, sf::Vector2f line2)
+{
+	bool left = true;
+	bool top = true;
+	if (line1.x > line2.x) left = false;
+	if (line1.y > line2.y) top = false;
+
+
+
+	float differanceX = line2.x - line1.x;
+	float differanceY = line2.y - line1.y;
+	rotation = (float)(atan2(differanceY, differanceX) * 180 / 3.141592653589);
+
+	size.x = (float)sqrt(pow(differanceY, 2) + pow(differanceX, 2));
+	size.y = 5.0f;
+
+	shape.setSize(size);
+	shape.setFillColor(sf::Color(0, 0, 0, 200));
+	shape.setRotation(rotation);
+	shape.setPosition(line1);
+	shape.setOrigin(sf::Vector2f(0, size.y / 2));
+}
