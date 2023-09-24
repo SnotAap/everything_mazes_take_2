@@ -6,6 +6,7 @@ Grid::Grid(int sizeX_, int sizeY_)
 	sizeY = sizeY_;
 
 	timerTime = sizeX_ * sizeY_ * 100;
+	timerTime = 0;							
 	timer = timerTime;
 }
 
@@ -13,12 +14,12 @@ void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 {
 	int tileSizeX = int(floor(1920 / (sizeX + 4)));
 	int tilesSizeY = int(floor(1080 / (sizeY + 4)));
-	int tileSize;
+	tileSize;
 	if (tileSizeX < tilesSizeY) tileSize = tileSizeX;
 	else tileSize = tilesSizeY;
 	//
 	cordinates cords = std::pair<int, int>(std::make_pair(NULL, NULL));
-	std::shared_ptr<Tile> plane = std::make_shared<Tile>(float(1920 / 2), float(1080 / 2), cords, float(tileSize * (sizeX)), float(tileSize * (sizeY)), sf::Color(0, 0, 0, 69), 0.0f);
+	plane = std::make_shared<Tile>(float(1920 / 2), float(1080 / 2), cords, float(tileSize * (sizeX)), float(tileSize * (sizeY)), sf::Color(0, 0, 0, 69), 0.0f);
 	plane->shape.setOrigin(sf::Vector2f(plane->size.x / 2, plane->size.y / 2));
 	renderList.emplace_back(plane);
 	//
@@ -321,4 +322,15 @@ bool Grid::removeWalls(microTime deltaTime)
 	{
 		return true;
 	}
+}
+
+bool Grid::devRemoveWalls()
+{
+	for (int i = 0; i < removedWallsOrderd.size(); i++)
+	{
+		wallMap[removedWallsOrderd[i].first][removedWallsOrderd[i].second]->active = false;
+	}
+
+	return true;
+	
 }
