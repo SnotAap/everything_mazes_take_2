@@ -140,7 +140,7 @@ std::vector<cordinates> pathSolvingAStar(Grid& grid, std::vector<std::shared_ptr
 		float position1Y = float((grid.plane->position.y - (grid.plane->size.y / 2) + ((p->position.second * (grid.tileSize) + grid.tileSize / 2))));
 		float position2X = float((grid.plane->position.x - (grid.plane->size.x / 2) + ((p->parent->position.first * (grid.tileSize)) + grid.tileSize / 2)));
 		float position2Y = float((grid.plane->position.y - (grid.plane->size.y / 2) + ((p->parent->position.second * (grid.tileSize) + grid.tileSize / 2))));
-		std::shared_ptr<Line> line = std::make_shared<Line>(sf::Vector2f(position1X, position1Y), sf::Vector2f(position2X, position2Y));
+		std::shared_ptr<Line> line = std::make_shared<Line>(sf::Vector2f(position1X, position1Y), sf::Vector2f(position2X, position2Y), grid.tileSize / 7);
 		renderList.emplace_back(line);
 		path.emplace_back(p->position);
 		std::cout << p->position.first << ", " << p->position.second << std::endl;
