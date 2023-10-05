@@ -5,6 +5,8 @@ class Grid
 public:
 	int sizeX;
 	int sizeY;
+	int tileSize;
+	std::shared_ptr<Tile> plane;
 	std::map<cordinates, std::shared_ptr<Tile>> tileMap;
 	std::map<cordinates, walls> wallMap;
 	std::vector <std::pair<cordinates, int>> removedWallsOrderd;
@@ -21,4 +23,5 @@ public:
 	void primsMaze();
 
 	bool removeWalls(microTime deltaTime);
+	bool devRemoveWalls();
 };

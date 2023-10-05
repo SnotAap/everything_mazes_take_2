@@ -17,10 +17,13 @@
 
 #include <time.h>
 #include "Object.h"
+#include "Button.h"
+#include "UI.h"
 #include "Line.h"
 #include "Wall.h"
 #include "CustomTypes.h"
 #include "Tile.h"
+#include "Node.h"
 #include "Grid.h"
 #include "PathFinding.h"
 #include "Robot.h"

@@ -6,6 +6,7 @@ Grid::Grid(int sizeX_, int sizeY_)
 	sizeY = sizeY_;
 
 	timerTime = sizeX_ * sizeY_ * 100;
+	timerTime = 0;							
 	timer = timerTime;
 }
 
@@ -13,12 +14,12 @@ void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 {
 	int tileSizeX = int(floor(1920 / (sizeX + 4)));
 	int tilesSizeY = int(floor(1080 / (sizeY + 4)));
-	int tileSize;
+	tileSize;
 	if (tileSizeX < tilesSizeY) tileSize = tileSizeX;
 	else tileSize = tilesSizeY;
 	//
 	cordinates cords = std::pair<int, int>(std::make_pair(NULL, NULL));
-	std::shared_ptr<Tile> plane = std::make_shared<Tile>(float(1920 / 2), float(1080 / 2), cords, float(tileSize * (sizeX)), float(tileSize * (sizeY)), sf::Color(0, 0, 0, 69), 0.0f);
+	plane = std::make_shared<Tile>(float(1920 / 2), float(1080 / 2), cords, float(tileSize * (sizeX)), float(tileSize * (sizeY)), sf::Color(0, 0, 0, 69), 0.0f);
 	plane->shape.setOrigin(sf::Vector2f(plane->size.x / 2, plane->size.y / 2));
 	renderList.emplace_back(plane);
 	//
@@ -183,43 +184,6 @@ void Grid::recursiveBacktrackingMaze()
 	startAndEndCords = std::pair<cordinates, cordinates>(std::make_pair(opening, openingEnd));
 }
 
-class MazeNode
-{
-public:
-	cordinates position;
-
-	bool partOfMaze = false;
-	bool partOfFrontier = false;
-	std::shared_ptr<MazeNode> neighbors[4];
-
-	MazeNode(int xPos, int yPos)
-	{
-		position = std::pair<int, int>(std::make_pair(xPos, yPos));
-	}
-
-	int getSide(std::shared_ptr<MazeNode> neighbor)
-	{
-		int side = -1;
-		if (position.first > neighbor->position.first)
-		{
-			side = East;
-		}
-		if (position.first < neighbor->position.first)
-		{
-			side = West;
-		}
-		if (position.second < neighbor->position.second)
-		{
-			side = North;
-		}
-		if (position.second > neighbor->position.second)
-		{
-			side = South;
-		}
-		return side;
-	}
-};
-
 void Grid::primsMaze()
 {
 	std::vector<cordinates> maze;
@@ -270,7 +234,7 @@ void Grid::primsMaze()
 			std::shared_ptr<MazeNode> myneighbors[4] = { northNeighbor, eastNeighbor, southNeighbor, westNeighbor };
 			for (int i = 0; i < 4; i++)
 			{
-				nodeMap[myCords]->neighbors[i] = myneighbors[i];
+				nodeMap[myCords]->setNeighbor(i, myneighbors[i]);
 			}
 		}
 	}
@@ -288,11 +252,12 @@ void Grid::primsMaze()
 		//updating frontier
 		for (int i = 0; i < 4; i++)
 		{
-			if (nodeMap[maze[count]]->neighbors[i] != nullptr)
+			
+			if (nodeMap[maze[count]]->getNeighbor(i) != nullptr)
 			{
-				if (!nodeMap[maze[count]]->neighbors[i]->partOfFrontier && !nodeMap[maze[count]]->neighbors[i]->partOfMaze)
+				if (!nodeMap[maze[count]]->getNeighbor(i)->partOfFrontier && !nodeMap[maze[count]]->getNeighbor(i)->partOfMaze)
 				{
-					cordinates neighborPosition = nodeMap[maze[count]]->neighbors[i]->position;
+					cordinates neighborPosition = nodeMap[maze[count]]->getNeighbor(i)->position;
 					frontier.emplace_back(neighborPosition);
 					nodeMap[neighborPosition]->partOfFrontier = true;
 				}
@@ -303,10 +268,9 @@ void Grid::primsMaze()
 		//getting maze neighbors of rand Frontier point
 		for (int i = 0; i < 4; i++)
 		{
-
-			if (nodeMap[frontier[randFront]]->neighbors[i] != nullptr)
+			if (nodeMap[frontier[randFront]]->getNeighbor(i) != nullptr)
 			{
-				cordinates neighborCords = nodeMap[frontier[randFront]]->neighbors[i]->position;
+				cordinates neighborCords = nodeMap[frontier[randFront]]->getNeighbor(i)->position;
 				if (nodeMap[neighborCords]->partOfMaze)
 				{
 					adjecentMazeTiles.emplace_back(neighborCords);
@@ -358,4 +322,15 @@ bool Grid::removeWalls(microTime deltaTime)
 	{
 		return true;
 	}
+}
+
+bool Grid::devRemoveWalls()
+{
+	for (int i = 0; i < removedWallsOrderd.size(); i++)
+	{
+		wallMap[removedWallsOrderd[i].first][removedWallsOrderd[i].second]->active = false;
+	}
+
+	return true;
+	
 }
