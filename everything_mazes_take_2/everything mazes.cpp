@@ -4,8 +4,8 @@ std::vector<std::shared_ptr<Object>> renderList;
 std::vector<cordinates> expressedwallMap;
 
 std::vector<cordinates> path;
-int sizeX = 50;
-int sizeY = 25;
+int sizeX = 30;
+int sizeY = 30;
 
 #define generateState 0
 #define solveState 1
@@ -15,15 +15,17 @@ int state = 0;
 microTime currentTime;
 microTime lastTime;
 microTime deltaTime;
+sf::Mouse myMouse;
 
 int main()
 {
     QueryPerformanceFrequency(&frequency);
     lastTime = getMicroTime();
     srand((unsigned int)getMicroTime());
+    UI myUI(renderList);
     Grid grid(sizeX, sizeY);
     grid.setup(renderList);
-    
+
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Mazes!");
 
@@ -52,14 +54,16 @@ int main()
         switch (state)
         {
         case generateState:
-            //if (grid.removeWalls(deltaTime))
-            //{                
-            //    state++;
-            //} 
-            if (grid.devRemoveWalls())
-            {
+            
+            if (grid.removeWalls(deltaTime))
+            {                
                 state++;
-            }
+            } 
+            //if (grid.devRemoveWalls())
+            //{
+            //    state++;
+            //}
+            
             break;
         case solveState:
             
