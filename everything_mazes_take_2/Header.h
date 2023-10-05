@@ -17,6 +17,8 @@
 
 #include <time.h>
 #include "Object.h"
+#include "Button.h"
+#include "UI.h"
 #include "Line.h"
 #include "Wall.h"
 #include "CustomTypes.h"
