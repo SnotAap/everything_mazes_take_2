@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CustomTypes.cpp" />
     <ClCompile Include="everything mazes.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -155,9 +156,11 @@
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Robot0.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CustomTypes.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Header.h" />
@@ -168,6 +171,7 @@
     <ClInclude Include="Robot.h" />
     <ClInclude Include="Robot0.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
