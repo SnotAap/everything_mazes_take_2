@@ -31,7 +31,7 @@ int main()
 
     grid.recursiveBacktrackingMaze();
     //grid.primsMaze();
-
+    
 
     std::shared_ptr<BaseRobot> robot0 = std::make_shared<BaseRobot>(grid);
     renderList.emplace_back(robot0);
@@ -42,7 +42,8 @@ int main()
     {
         sf::Event event;
         while (window.pollEvent(event))
-        {
+        {            
+            myUI.checkButtonsPressed(myMouse, event);            
             if (event.type == sf::Event::Closed)
                 window.close();
         }        
@@ -50,6 +51,7 @@ int main()
         //
         currentTime = getMicroTime();
         deltaTime = currentTime - lastTime;
+        myUI.checkButtonsHoverd(myMouse);                 
         //
         switch (state)
         {

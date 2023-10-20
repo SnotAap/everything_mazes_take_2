@@ -9,7 +9,7 @@ Button::Button()
 {
 	position = sf::Vector2f(0, 0);	
 	shape.setPosition(position);	
-	shape.setFillColor(sf::Color(0, 191, 255, 255));
+	shape.setFillColor(sf::Color(0, 191, 255, 255));	
 	sentence = "not specified";
 	text.setString(sentence);
 	text.setPosition(position);	
@@ -25,10 +25,10 @@ Button::Button()
 }
 
 Button::Button(float x_, float y_, float scale, std::string sentence_)
-{
+{	
 	position = sf::Vector2f(x_, y_);
-	shape.setPosition(position);
-	shape.setFillColor(sf::Color(0, 0, 0, 69));
+	shape.setPosition(position);	
+	shape.setFillColor(sf::Color(0, 0, 0, 69));	
 	sentence = sentence_;
 	text.setString(sentence);
 	if (!font.loadFromFile(fontDirectory))
@@ -38,9 +38,10 @@ Button::Button(float x_, float y_, float scale, std::string sentence_)
 	text.setFont(font);
 	text.setPosition(position);
 	text.setScale(sf::Vector2f(scale, scale));
-	text.setFillColor(sf::Color::Black);
+	text.setFillColor(sf::Color::Black);	
 	size = sf::Vector2f(text.getGlobalBounds().width * 1.1f, text.getGlobalBounds().height * 1.5f);
-	shape.setSize(size);
+	shape.setSize(size);	
+	
 }
 
 

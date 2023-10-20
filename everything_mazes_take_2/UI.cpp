@@ -3,7 +3,7 @@
 UI::UI(std::vector<std::shared_ptr<Object>>& renderList)
 {
 	//make all the buttons here!
-	std::shared_ptr<Button> myButton0 = std::make_shared<Button>(1600.0f, 0.0f, 1.0f, "hello world");
+	std::shared_ptr<Button> myButton0 = std::make_shared<Button>(1600.0f, 250.0f, 1.0f, "hello world");
 	buttons.emplace_back(myButton0);
 	std::shared_ptr<Button> myButton1 = std::make_shared<Button>(1600.0f, 50.0f, 1.0f, "hello world \n this is a second line.");
 	buttons.emplace_back(myButton1);
@@ -16,7 +16,6 @@ UI::UI(std::vector<std::shared_ptr<Object>>& renderList)
 	}
 }
 
-//work in progress
 int UI::checkButtonsHoverd(sf::Mouse mouse)
 {
 	for (int i = 0; i < buttons.size(); i++)
@@ -25,62 +24,43 @@ int UI::checkButtonsHoverd(sf::Mouse mouse)
 		if (mouse.getPosition().x >= buttons[i]->position.x && mouse.getPosition().x <= (buttons[i]->position.x + buttons[i]->size.x))
 		{
 			if (mouse.getPosition().y >= buttons[i]->position.y && mouse.getPosition().y <= (buttons[i]->position.y + buttons[i]->size.y))
-			{
-				
+			{				
+				buttons[i]->text.setFillColor(sf::Color(128, 128, 128, 255));
 				return i;
 			}
 			else
 			{
-				LeftMousebuffer = false;
-				LeftMousePressed = false;
-			}
-
+				buttons[i]->text.setFillColor(sf::Color::Black);
+			}			
 		}
 		else
-		{
-			LeftMousebuffer = false;
-			LeftMousePressed = false;
+		{			
+			buttons[i]->text.setFillColor(sf::Color::Black);			
 		}
-
 	}
+	
 	return -1;
 }
 // work in progress
-int UI::checkButtonsPressed(sf::Mouse mouse)
-{
+int UI::checkButtonsPressed(sf::Mouse mouse, sf::Event event)
+{	
 	for (int i = 0; i < buttons.size(); i++)
 	{
 		//box collision.
-		
 		if (mouse.getPosition().x >= buttons[i]->position.x && mouse.getPosition().x <= (buttons[i]->position.x + buttons[i]->size.x))
 		{
 			if(mouse.getPosition().y >= buttons[i]->position.y && mouse.getPosition().y <= (buttons[i]->position.y + buttons[i]->size.y))
-			{
-				if (mouse.isButtonPressed(mouse.Left) && !LeftMousebuffer)
-				{
-					LeftMousePressed = true;
-					LeftMousebuffer = true;
-					return i;
-				}
-				else
-				{
-					LeftMousebuffer = false;
-					LeftMousePressed = false;
-				}
+			{			
 
-			}
-			else
-			{
-				LeftMousebuffer = false;
-				LeftMousePressed = false;
-			}
-		}
-		else
-		{
-			LeftMousebuffer = false;
-			LeftMousePressed = false;
-		}
-
+				if (event.type == sf::Event::MouseButtonPressed)
+				{	
+					if (event.mouseButton.button == sf::Mouse::Left) {
+						buttonAction(i);
+						return i;
+					}														
+				}		
+			}			
+		}		
 	}
 	return -1;
 }

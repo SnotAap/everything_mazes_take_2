@@ -9,7 +9,7 @@ public:
 	bool LeftMousebuffer = false;
 
 	int checkButtonsHoverd(sf::Mouse mouse);
-	int checkButtonsPressed(sf::Mouse mouse);
+	int checkButtonsPressed(sf::Mouse mouse, sf::Event event);
 	void buttonAction(int action);
 	void draw(sf::RenderWindow* window);
 
