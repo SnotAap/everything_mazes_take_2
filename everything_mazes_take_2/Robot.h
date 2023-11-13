@@ -1,6 +1,6 @@
 #pragma once
 
-class BaseRobot : public Object
+class Robot : public Object
 {
 public:
 	sf::RectangleShape shape;
@@ -8,6 +8,7 @@ public:
 	sf::Vector2f size;
 	sf::Vector2f gridOffset;
 	sf::Vector2f futurePosition;
+	std::map<cordinates, bool> traversedTiles;
 	cordinates gridPos;
 	float tileSize;
 	float speed = 0.001f;
@@ -16,8 +17,8 @@ public:
 	bool moving = false;
 	int movingDirection;
 
-	BaseRobot();
-	BaseRobot(Grid grid);
+	Robot();
+	Robot(Grid grid);
 
 	void updateAccesiblity(Grid grid);
 	
@@ -28,7 +29,7 @@ public:
 	bool moveWest(microTime deltaTime);
 	bool move(microTime deltaTime);
 
-	virtual void movement(Grid grid, microTime deltaTime);
+	virtual void movement(Grid& grid, microTime deltaTime);
 
 	virtual void draw(sf::RenderWindow* window) override;
 };

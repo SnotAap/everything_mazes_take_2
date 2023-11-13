@@ -1,12 +1,12 @@
 #include "Header.h"
 
-BaseRobot::BaseRobot()
+Robot::Robot()
 {
 	tileSize = -1;
 	movingDirection = -1;
 }
 
-BaseRobot::BaseRobot(Grid grid)
+Robot::Robot(Grid grid)
 {
 	tileSize = grid.tileMap[grid.startAndEndCords.first]->size.x;
 	size = sf::Vector2f((tileSize / 1.5f), (tileSize / 1.5f));
@@ -20,7 +20,7 @@ BaseRobot::BaseRobot(Grid grid)
 	shape.setFillColor(color);
 }
 
-void BaseRobot::updateAccesiblity(Grid grid)
+void Robot::updateAccesiblity(Grid grid)
 {
 	accesibleTiles.clear();
 	if (gridPos.second > 0)					//north
@@ -70,7 +70,7 @@ void BaseRobot::updateAccesiblity(Grid grid)
 	}
 }
 
-bool BaseRobot::moveNorth(microTime deltaTime)
+bool Robot::moveNorth(microTime deltaTime)
 {
 	if (position.y > futurePosition.y)
 	{
@@ -87,7 +87,7 @@ bool BaseRobot::moveNorth(microTime deltaTime)
 	}
 }
 
-bool BaseRobot::moveEast(microTime deltaTime)
+bool Robot::moveEast(microTime deltaTime)
 {
 	if (position.x < futurePosition.x)
 	{
@@ -104,7 +104,7 @@ bool BaseRobot::moveEast(microTime deltaTime)
 	}
 }
 
-bool BaseRobot::moveSouth(microTime deltaTime)
+bool Robot::moveSouth(microTime deltaTime)
 {
 	if (position.y < futurePosition.y)
 	{
@@ -121,7 +121,7 @@ bool BaseRobot::moveSouth(microTime deltaTime)
 	}
 }
 
-bool BaseRobot::moveWest(microTime deltaTime)
+bool Robot::moveWest(microTime deltaTime)
 {
 	if (position.x > futurePosition.x)
 	{
@@ -138,7 +138,7 @@ bool BaseRobot::moveWest(microTime deltaTime)
 	}
 }
 
-void BaseRobot::setFuturePosition()
+void Robot::setFuturePosition()
 {
 	switch (movingDirection)
 	{
@@ -156,9 +156,10 @@ void BaseRobot::setFuturePosition()
 		break;
 	}
 	shape.setPosition(position);
+	
 }
 
-bool BaseRobot::move(microTime deltaTime)
+bool Robot::move(microTime deltaTime)
 {
 	switch (movingDirection)
 	{
@@ -178,7 +179,7 @@ bool BaseRobot::move(microTime deltaTime)
 	return false;
 }
 
-void BaseRobot::movement(Grid grid, microTime deltaTime)
+void Robot::movement(Grid& grid, microTime deltaTime)
 {	
 	
 	if (!moving)
@@ -199,7 +200,7 @@ void BaseRobot::movement(Grid grid, microTime deltaTime)
 	}
 }
 
-void BaseRobot::draw(sf::RenderWindow* window)
+void Robot::draw(sf::RenderWindow* window)
 {
 	window->draw(shape);
 }
