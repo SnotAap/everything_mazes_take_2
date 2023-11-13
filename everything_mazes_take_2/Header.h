@@ -18,6 +18,7 @@
 #include <time.h>
 #include "Object.h"
 #include "Button.h"
+#include "Text.h"
 #include "UI.h"
 #include "Line.h"
 #include "Wall.h"
@@ -28,5 +29,7 @@
 #include "PathFinding.h"
 #include "Robot.h"
 #include "Robot0.h"
+#include "Robot1.h"
+
 
 
