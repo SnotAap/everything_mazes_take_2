@@ -10,19 +10,19 @@ int Node::getSide(std::shared_ptr<Node> neighbor)
 	int side = -1;
 	if (position.first > neighbor->position.first)
 	{
-		side = East;
+		side = West;
 	}
 	if (position.first < neighbor->position.first)
 	{
-		side = West;
+		side = East;
 	}
 	if (position.second < neighbor->position.second)
 	{
-		side = North;
+		side = South;
 	}
 	if (position.second > neighbor->position.second)
 	{
-		side = South;
+		side = North;
 	}
 	return side;
 }
@@ -48,19 +48,19 @@ int MazeNode::getSide(std::shared_ptr<MazeNode> neighbor)
 	int side = -1;
 	if (position.first > neighbor->position.first)
 	{
-		side = East;
+		side = West;
 	}
 	if (position.first < neighbor->position.first)
 	{
-		side = West;
+		side = East;
 	}
 	if (position.second < neighbor->position.second)
 	{
-		side = North;
+		side = South;
 	}
 	if (position.second > neighbor->position.second)
 	{
-		side = South;
+		side = North;
 	}
 	return side;
 }
@@ -86,21 +86,21 @@ AStarNode::AStarNode(int xPos, int yPos) : Node(xPos, yPos)
 int AStarNode::getSide(std::shared_ptr<AStarNode> neighbor)
 {
 	int side = -1;
-	if (position.first < neighbor->position.first)
-	{
-		side = East;
-	}
 	if (position.first > neighbor->position.first)
 	{
 		side = West;
 	}
-	if (position.second > neighbor->position.second)
+	if (position.first < neighbor->position.first)
 	{
-		side = North;
+		side = East;
 	}
 	if (position.second < neighbor->position.second)
 	{
 		side = South;
+	}
+	if (position.second > neighbor->position.second)
+	{
+		side = North;
 	}
 	return side;
 }
