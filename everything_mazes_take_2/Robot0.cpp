@@ -124,8 +124,8 @@ int Robot0::floodFillGetDirection(Grid grid)
 			{
 				std::list<cordinates>::iterator lastTile = currentTile;
 				currentTile--;
-				movingDirection = nodeMap[*currentTile]->getSide(nodeMap[*lastTile]);
-
+				//movingDirection = nodeMap[*currentTile]->getSide(nodeMap[*lastTile]);
+				movingDirection = nodeMap[*lastTile]->getSide(nodeMap[*currentTile]);
 
 			}
 			else break;
@@ -135,7 +135,7 @@ int Robot0::floodFillGetDirection(Grid grid)
 	return movingDirection;
 }
 
-void Robot0::movement(Grid grid, microTime deltaTime)
+void Robot0::movement(Grid& grid, microTime deltaTime)
 {
 	if (!moving)
 	{

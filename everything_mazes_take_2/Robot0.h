@@ -1,5 +1,5 @@
 #pragma once
-class Robot0 : public BaseRobot
+class Robot0 : public Robot
 {
 
 public:
@@ -15,7 +15,7 @@ public:
 
 	int floodFillGetDirection(Grid grid);
 
-	virtual void movement(Grid grid, microTime deltaTime) override;
+	virtual void movement(Grid& grid, microTime deltaTime) override;
 
 	virtual void draw(sf::RenderWindow* window) override;
 
