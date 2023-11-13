@@ -4,7 +4,7 @@ Grid::Grid(int sizeX_, int sizeY_)
 {
 	sizeX = sizeX_;
 	sizeY = sizeY_;
-
+	tileSize = 50;
 	timerTime = sizeX_ * sizeY_ * 100;
 	timerTime = 0;							
 	timer = timerTime;
@@ -283,7 +283,7 @@ void Grid::primsMaze()
 		nodeMap[frontier[randFront]]->partOfMaze = true;
 		maze.emplace_back(frontier[randFront]);
 
-		std::pair<cordinates, int> removedWall = std::make_pair(frontier[randFront], nodeMap[adjecentMazeTiles[randAdjecentMazeTile]]->getSide(nodeMap[frontier[randFront]]));
+		std::pair<cordinates, int> removedWall = std::make_pair(frontier[randFront], nodeMap[frontier[randFront]]->getSide(nodeMap[adjecentMazeTiles[randAdjecentMazeTile]]));
 		removedWallsOrderd.emplace_back(removedWall);
 		frontier.erase(frontier.begin() + randFront);
 		//

@@ -11,6 +11,7 @@ public:
 	std::map<cordinates, walls> wallMap;
 	std::vector <std::pair<cordinates, int>> removedWallsOrderd;
 	std::pair<cordinates, cordinates> startAndEndCords;
+	std::vector<std::shared_ptr<Text>> depthList;
 
     microTime timerTime;
 	microTime timer;
