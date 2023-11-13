@@ -12,10 +12,25 @@ Wall::Wall(float xPos_, float yPos_, float xSize_, float ySize_, float rotation_
 	shape.setFillColor(color);
 }
 
+
+Wall::Wall(float xPos_, float yPos_, float xSize_, float ySize_, float rotation_, sf::Color color_)
+{
+	position = sf::Vector2f(xPos_, yPos_);
+	size = sf::Vector2f(xSize_, ySize_);
+	rotation = rotation_;
+	color = color_;
+	shape.setPosition(position);
+	shape.setSize(size);
+	shape.setRotation(rotation);
+	shape.setFillColor(color);
+}
+
+
 void Wall::draw(sf::RenderWindow* window)
 {
 	if (active)
 	{
+
 		window->draw(shape);
 	}	
 }
