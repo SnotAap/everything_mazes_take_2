@@ -10,7 +10,7 @@ Line::Line(float xPos_, float yPos_, float xSize_, float ySize_, float rotation_
 	position = sf::Vector2f(xPos_, yPos_);
 	size = sf::Vector2f(xSize_, ySize_);
 	rotation = rotation_;
-	color = sf::Color(0, 0, 0, 0);
+	color = sf::Color(0, 0, 0, 200);
 	shape.setPosition(position);
 	shape.setSize(size);
 	shape.setRotation(rotation);
