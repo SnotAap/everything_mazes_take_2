@@ -51,10 +51,10 @@ int main()
     grid.primsMaze();
     
 
-    //std::shared_ptr<Robot> robot = std::make_shared<Robot>(grid);
-    //renderList.emplace_back(robot);
-    //std::shared_ptr<Robot0> robot0 = std::make_shared<Robot0>(grid);
-    //renderList.emplace_back(robot0);
+    std::shared_ptr<Robot> robot = std::make_shared<Robot>(grid);
+    renderList.emplace_back(robot);
+    std::shared_ptr<Robot0> robot0 = std::make_shared<Robot0>(grid);
+    renderList.emplace_back(robot0);
     std::shared_ptr<Robot1> robot1 = std::make_shared<Robot1>(grid, font, renderList);
     renderList.emplace_back(robot1);
 
@@ -80,7 +80,7 @@ int main()
             //if (grid.removeWalls(deltaTime))
             //{        
             //    nodes = setupNodes(grid, floodedMaze, queue);
-            //    state+=2;
+            //    state++;
             //} 
             if (grid.devRemoveWalls())
             {
@@ -92,15 +92,14 @@ int main()
             break;
         case solveState:
             //
-            //if (robot->gridPos != grid.startAndEndCords.second)
-            //{
-            //    robot->movement(grid, deltaTime);
-            //}            
-            //if (robot0->gridPos != grid.startAndEndCords.second)
-            //{
-            //    robot0->movement(grid, deltaTime);
-            //}
-            
+            if (robot->gridPos != grid.startAndEndCords.second)
+            {
+                robot->movement(grid, deltaTime);
+            }            
+            if (robot0->gridPos != grid.startAndEndCords.second)
+            {
+                robot0->movement(grid, deltaTime);
+            }            
             if (robot1->gridPos != grid.startAndEndCords.second)
             {
                 robot1->movement(grid, deltaTime, renderList);
