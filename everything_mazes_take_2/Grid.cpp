@@ -120,6 +120,22 @@ void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 	
 }*/
 
+void Grid::resetGrid()
+{
+	for (int x = 0; x < sizeX; x++)
+	{
+		for (int y = 0; y < sizeY; y++)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+				wallMap[myCords][i]->active = true;
+				tileMap[myCords]->visited = false;
+			}
+		}
+	}
+}
+
 void Grid::recursiveBacktrackingMaze()
 {
 	std::list<cordinates> exploredTiles;
@@ -359,7 +375,11 @@ void Grid::clearWallList()
 		for (int y = 0; y < sizeY; y++)
 		{
 			cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
-			//remove wallMap;			
+			
+			for (int i = 0; i < wallMap.size(); i++)
+			{
+				wallMap[myCords]->get()->~Wall();
+			}
 		}
 	}
 }
