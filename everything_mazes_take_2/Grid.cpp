@@ -359,27 +359,3 @@ bool Grid::devRemoveWalls()
 	return true;
 	
 }
-
-void Grid::clearTileList()
-{
-	for (int i = 0; i < tileMap.size(); i++)
-	{
-		//tileMap[i];
-	}
-}
-
-void Grid::clearWallList()
-{
-	for (int x = 0; x < sizeX; x++)
-	{
-		for (int y = 0; y < sizeY; y++)
-		{
-			cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
-			
-			for (int i = 0; i < wallMap.size(); i++)
-			{
-				wallMap[myCords]->get()->~Wall();
-			}
-		}
-	}
-}

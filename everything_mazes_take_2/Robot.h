@@ -10,8 +10,8 @@ public:
 	sf::Vector2f futurePosition;
 	cordinates gridPos;
 	float tileSize;
-	float speed = 0.001f;
-	//float speed = 10.0f; //dev time
+	//float speed = 0.001f;
+	float speed = 10.0f; //dev time
 	std::vector<int> accesibleTiles;
 	bool moving = false;
 	int movingDirection;

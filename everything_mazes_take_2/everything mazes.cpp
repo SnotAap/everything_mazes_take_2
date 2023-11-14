@@ -52,20 +52,20 @@ int main()
         myUI.checkButtonsHoverd(myMouse);   
 
         if (myUI.buttons[0]->IsPressed == true) 
-        {          
-            //grid.clearWallList();
-            grid.setup(renderList);            
+        {                      
+            grid.setup(renderList);              
             myUI.buttons[0]->IsPressed = false;
         }
         if (myUI.buttons[1]->IsPressed == true) 
-        {                
-            grid.recursiveBacktrackingMaze();
-            grid.devRemoveWalls(); 
+        {     
+            grid.resetGrid();            
+            grid.recursiveBacktrackingMaze();           
+            grid.devRemoveWalls();          
             grid.removedWallsOrderd.clear();
             myUI.buttons[1]->IsPressed = false;
         }
         if (myUI.buttons[2]->IsPressed == true)
-        {      
+        {                  
             robot0 = std::make_shared<BaseRobot>(grid);
             renderList.emplace_back(robot0);
             robot1 = std::make_shared<Robot0>(grid);                       
@@ -100,12 +100,16 @@ int main()
                 }
                 if (robot1->gridPos != grid.startAndEndCords.second)
                 {
-                    robot1->movement(grid, deltaTime);
+                    robot1->movement(grid, deltaTime);                    
                 }
                 else
                 {
                     pathSolvingAStar(grid, renderList);
                     state++;
+                } 
+                if (robot1->gridPos == grid.startAndEndCords.second) 
+                {
+                    solve = false;
                 }
             }           
             break;
