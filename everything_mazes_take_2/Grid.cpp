@@ -49,10 +49,8 @@ void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 				tile->walls[i] = wallMap[myCords][i];
 			}
 			//	
-			tileMap[myCords] = tile;
+			tileMap[myCords] = tile;			
 			renderList.emplace_back(tile);
-
-
 		}
 	}
 	//
@@ -110,6 +108,17 @@ void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 		}
 	}
 }
+/*void Grid::render(std::vector<std::shared_ptr<Object>>& renderList)
+{	
+	for (int x = 0; x < sizeX; x++)
+	{
+		for (int y = 0; y < sizeY; y++)
+		{		
+			renderList.emplace_back();
+		}
+	}
+	
+}*/
 
 void Grid::recursiveBacktrackingMaze()
 {
@@ -333,4 +342,24 @@ bool Grid::devRemoveWalls()
 
 	return true;
 	
+}
+
+void Grid::clearTileList()
+{
+	for (int i = 0; i < tileMap.size(); i++)
+	{
+		//tileMap[i];
+	}
+}
+
+void Grid::clearWallList()
+{
+	for (int x = 0; x < sizeX; x++)
+	{
+		for (int y = 0; y < sizeY; y++)
+		{
+			cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+			//remove wallMap;			
+		}
+	}
 }

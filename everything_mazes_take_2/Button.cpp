@@ -7,7 +7,7 @@ void Button::draw(sf::RenderWindow* window)
 
 Button::Button()
 {
-	position = sf::Vector2f(0, 0);	
+	position = sf::Vector2f(0, 0);		
 	shape.setPosition(position);	
 	shape.setFillColor(sf::Color(0, 191, 255, 255));	
 	sentence = "not specified";
@@ -16,7 +16,7 @@ Button::Button()
 	if (!font.loadFromFile(fontDirectory))
 	{
 
-	}
+	}	
 	text.setFont(font);
 	text.setFillColor(sf::Color::Black);
 	text.setScale(0.5, 0.5);
@@ -38,9 +38,11 @@ Button::Button(float x_, float y_, float scale, std::string sentence_)
 	text.setFont(font);
 	text.setPosition(position);
 	text.setScale(sf::Vector2f(scale, scale));
-	text.setFillColor(sf::Color::Black);	
+	text.setFillColor(sf::Color::Black);		
 	size = sf::Vector2f(text.getGlobalBounds().width * 1.1f, text.getGlobalBounds().height * 1.5f);
 	shape.setSize(size);	
+	shape.setOrigin(size.x/2, size.y/2);
+	text.setOrigin(shape.getOrigin().x, shape.getOrigin().y);
 	
 }
 

@@ -20,7 +20,9 @@ public:
 
 	void setup(std::vector<std::shared_ptr<Object>>& renderList);
 	void recursiveBacktrackingMaze();
-	void primsMaze();
+	void primsMaze();	
+	void clearTileList();
+	void clearWallList();
 
 	bool removeWalls(microTime deltaTime);
 	bool devRemoveWalls();
