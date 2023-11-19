@@ -40,3 +40,8 @@ Line::Line(sf::Vector2f line1, sf::Vector2f line2, float thickness)
 	shape.setPosition(line1);
 	shape.setOrigin(sf::Vector2f(0, size.y / 2));
 }
+
+Line::~Line()
+{
+
+}

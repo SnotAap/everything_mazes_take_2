@@ -18,6 +18,7 @@ public:
 	int wallRemoveItorater = 0;
 
 	Grid(int sizeX_, int sizeY_);
+	~Grid();
 
 	void setup(std::vector<std::shared_ptr<Object>>& renderList);
 	void resetGrid();

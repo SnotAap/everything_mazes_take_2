@@ -19,6 +19,7 @@ public:
 
 	Robot();
 	Robot(Grid grid);
+	~Robot();
 
 	void updateAccesiblity(Grid grid);
 	

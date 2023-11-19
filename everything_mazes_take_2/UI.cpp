@@ -20,6 +20,11 @@ UI::UI(std::vector<std::shared_ptr<Object>>& renderList)
 	}
 }
 
+UI::~UI()
+{
+
+}
+
 int UI::checkButtonsHoverd(sf::Mouse mouse)
 {
 	for (int i = 0; i < buttons.size(); i++)

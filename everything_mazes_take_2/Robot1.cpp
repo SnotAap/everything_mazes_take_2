@@ -21,6 +21,11 @@ Robot1::Robot1(Grid& grid, sf::Font font_, std::vector<std::shared_ptr<Object>>&
 	traversedTiles[gridPos] = true;
 }
 
+Robot1::~Robot1()
+{
+
+}
+
 void Robot1::draw(sf::RenderWindow* window)
 {
 	window->draw(shape);

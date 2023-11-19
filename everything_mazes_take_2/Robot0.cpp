@@ -22,6 +22,11 @@ Robot0::Robot0(Grid grid)
 	grid.tileMap[gridPos]->shape.setFillColor(grid.tileMap[gridPos]->color);
 }
 
+Robot0::~Robot0()
+{
+
+}
+
 void Robot0::setupNodeMap(Grid grid)
 {
 	for (int x = 0; x < grid.sizeX; x++)

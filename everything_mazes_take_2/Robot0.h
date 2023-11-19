@@ -11,7 +11,7 @@ public:
 	void setupNodeMap(Grid grid);
 
 	Robot0(Grid grid);
-
+	~Robot0();
 
 	int floodFillGetDirection(Grid grid);
 

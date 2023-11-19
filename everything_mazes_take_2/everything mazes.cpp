@@ -5,12 +5,12 @@ std::vector<cordinates> expressedwallMap;
 
 //test
 
-std::map<cordinates, int> floodedMaze;
-int depth = -1;
-std::vector<std::shared_ptr<Node>> toBeRemoved;
-std::vector<std::shared_ptr<Node>> toBeAdded;
-std::list<std::shared_ptr<Node>> queue;
-std::map<cordinates, std::shared_ptr<Node>> nodes;
+//std::map<cordinates, int> floodedMaze;
+//int depth = -1;
+//std::vector<std::shared_ptr<Node>> toBeRemoved;
+//std::vector<std::shared_ptr<Node>> toBeAdded;
+//std::list<std::shared_ptr<Node>> queue;
+//std::map<cordinates, std::shared_ptr<Node>> nodes;
 
 //
 
@@ -40,7 +40,7 @@ int main()
     srand((unsigned int)getMicroTime());
     UI myUI(renderList);
     Grid grid(sizeX, sizeY);
-    grid.setup(renderList);
+    //grid.setup(renderList);
 
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Mazes!");
@@ -48,7 +48,7 @@ int main()
     //grid.recursiveBacktrackingMaze();   
     //grid.primsMaze();   
     
-    std::shared_ptr<BaseRobot> robot0;
+    std::shared_ptr<Robot> robot0;
     std::shared_ptr<Robot0> robot1;
     
 
@@ -92,7 +92,7 @@ int main()
         } 
         if (myUI.buttons[3]->IsPressed == true && solve == false)
         {
-            robot0 = std::make_shared<BaseRobot>(grid);
+            robot0 = std::make_shared<Robot>(grid);
             renderList.emplace_back(robot0);
             robot1 = std::make_shared<Robot0>(grid);
             renderList.emplace_back(robot1);
@@ -111,7 +111,7 @@ int main()
             //} 
             if (grid.devRemoveWalls())
             {
-                nodes = setupNodes(grid, floodedMaze, queue);
+                //nodes = setupNodes(grid, floodedMaze, queue);
                 state++;
             }
  
@@ -134,11 +134,11 @@ int main()
                     pathSolvingAStar(grid, renderList);
                     state++;
                 } 
-                if (robot1->gridPos == grid.startAndEndCords.second) 
-                {
-                    solve = false;
-                    myUI.buttons[3]->IsPressed = false;
-                }
+                //if (robot1->gridPos == grid.startAndEndCords.second) 
+                //{
+                //    solve = false;
+                //    myUI.buttons[3]->IsPressed = false;
+                //}
             }           
             break;
         case solvedState:
@@ -153,10 +153,10 @@ int main()
         {            
             renderList[i]->draw(&window);             
         }
-        for (int i = 0; i < grid.depthList.size(); i++)
-        {
-            grid.depthList[i]->draw(&window);
-        }
+        //for (int i = 0; i < grid.depthList.size(); i++)
+        //{
+        //    grid.depthList[i]->draw(&window);
+        //}
         //
         window.display();
         lastTime = currentTime;

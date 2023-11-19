@@ -12,6 +12,10 @@ Wall::Wall(float xPos_, float yPos_, float xSize_, float ySize_, float rotation_
 	shape.setFillColor(color);
 }
 
+Wall::~Wall()
+{
+
+}
 
 Wall::Wall(float xPos_, float yPos_, float xSize_, float ySize_, float rotation_, sf::Color color_)
 {

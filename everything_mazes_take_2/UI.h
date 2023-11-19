@@ -4,7 +4,9 @@ class UI
 public:
 	std::vector<std::shared_ptr<Button>> buttons;
 	std::shared_ptr<std::vector<std::shared_ptr<Object>>> renderList;
+
 	UI(std::vector<std::shared_ptr<Object>>& renderList_);
+	~UI();
 	bool LeftMousePressed = false;
 	bool LeftMousebuffer = false;
 

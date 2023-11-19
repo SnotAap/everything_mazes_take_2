@@ -10,6 +10,11 @@ Grid::Grid(int sizeX_, int sizeY_)
 	timer = timerTime;
 }
 
+Grid::~Grid()
+{
+
+}
+
 void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 {
 	if (tileMap.size() == 0 && wallMap.size() == 0)

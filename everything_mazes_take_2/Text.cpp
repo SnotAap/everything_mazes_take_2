@@ -32,3 +32,8 @@ Text::Text(std::string string, sf::Font& font, sf::Vector2f scale_, sf::Vector2f
 	text.setFont(font);
 	text.setFillColor(color);
 }
+
+Text::~Text()
+{
+
+}

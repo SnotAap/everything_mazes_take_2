@@ -12,7 +12,10 @@ Tile::Tile(float xPos_, float yPos_, cordinates gridPos_, float xSize_, float yS
 	shape.setFillColor(color);
 }
 
+Tile::~Tile()
+{
 
+}
 
 void Tile::draw(sf::RenderWindow* window)
 {

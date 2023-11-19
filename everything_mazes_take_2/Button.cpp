@@ -46,5 +46,10 @@ Button::Button(float x_, float y_, float scale, std::string sentence_)
 	
 }
 
+Button::~Button()
+{
+
+}
+
 
 

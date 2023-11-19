@@ -16,6 +16,6 @@ public:
 	virtual void draw(sf::RenderWindow* window) override;
 	Text();
 	Text(std::string string, sf::Font& font, sf::Vector2f scale_, sf::Vector2f position_);
-
+	~Text();
 	
 };

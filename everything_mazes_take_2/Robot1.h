@@ -13,6 +13,8 @@ public:
 	int depth = -1;
 
 	Robot1(Grid& grid, sf::Font font_, std::vector<std::shared_ptr<Object>>& renderList);
+	~Robot1();
+
 	std::map<cordinates, std::shared_ptr<Node>> setupNodes(Grid& grid);
 	void setupWalls(Grid& grid, std::vector<std::shared_ptr<Object>>& renderList);
 	void updateWallMap(Grid& grid, std::vector<std::shared_ptr<Object>>& renderList);

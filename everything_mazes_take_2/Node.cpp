@@ -5,6 +5,11 @@ Node::Node(int xPos, int yPos)
 	position = std::pair<int, int>(std::make_pair(xPos, yPos));
 }
 
+Node::~Node()
+{
+
+}
+
 int Node::getSide(std::shared_ptr<Node> neighbor)
 {
 	int side = -1;
@@ -43,6 +48,12 @@ MazeNode::MazeNode(int xPos, int yPos) : Node(xPos, yPos)
 {
 	position = std::pair<int, int>(std::make_pair(xPos, yPos));
 }
+
+MazeNode::~MazeNode()
+{
+
+}
+
 int MazeNode::getSide(std::shared_ptr<MazeNode> neighbor)
 {
 	int side = -1;
@@ -81,6 +92,11 @@ AStarNode::AStarNode(int xPos, int yPos) : Node(xPos, yPos)
 {
 	position = std::pair<int, int>(std::make_pair(xPos, yPos));
 	visited = false;
+}
+
+AStarNode::~AStarNode()
+{
+
 }
 
 int AStarNode::getSide(std::shared_ptr<AStarNode> neighbor)

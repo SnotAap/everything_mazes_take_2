@@ -10,6 +10,7 @@ public:
 	bool visited = false;
 
 	Node(int xPos, int yPos);
+	~Node();
 
 	int getSide(std::shared_ptr<Node> neighbor);
 
@@ -26,6 +27,7 @@ public:
 
 
 	MazeNode(int xPos, int yPos);
+	~MazeNode();
 	int getSide(std::shared_ptr<MazeNode> neighbor);
 	
 	std::shared_ptr<MazeNode> getNeighbor(int index);
@@ -43,6 +45,7 @@ public:
 	std::shared_ptr<AStarNode> neighbors[4];
 
 	AStarNode(int xPos, int yPos);
+	~AStarNode();
 
 	int getSide(std::shared_ptr<AStarNode> neighbor);
 

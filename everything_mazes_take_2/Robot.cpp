@@ -20,6 +20,11 @@ Robot::Robot(Grid grid)
 	shape.setFillColor(color);
 }
 
+Robot::~Robot()
+{
+
+}
+
 void Robot::updateAccesiblity(Grid grid)
 {
 	accesibleTiles.clear();
