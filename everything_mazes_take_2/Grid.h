@@ -22,8 +22,6 @@ public:
 	void resetGrid();
 	void recursiveBacktrackingMaze();
 	void primsMaze();	
-	void clearTileList();
-	void clearWallList();
 
 	bool removeWalls(microTime deltaTime);
 	bool devRemoveWalls();
