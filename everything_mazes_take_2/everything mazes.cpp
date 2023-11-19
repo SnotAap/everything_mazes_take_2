@@ -57,10 +57,9 @@ int main()
             myUI.buttons[0]->IsPressed = false;
         }
         if (myUI.buttons[1]->IsPressed == true) 
-        {     
-            grid.resetGrid();            
-            grid.recursiveBacktrackingMaze();           
-            grid.devRemoveWalls();          
+        {                
+            grid.recursiveBacktrackingMaze();
+            grid.devRemoveWalls(); 
             grid.removedWallsOrderd.clear();
             myUI.buttons[1]->IsPressed = false;
         }
