@@ -1,14 +1,18 @@
 #include "Header.h"
 
+bool gridRenderd = false;
+
 UI::UI(std::vector<std::shared_ptr<Object>>& renderList)
 {
 	//make all the buttons here!
-	std::shared_ptr<Button> myButton0 = std::make_shared<Button>(1600.0f, 250.0f, 1.0f, "hello world");
+	std::shared_ptr<Button> myButton0 = std::make_shared<Button>(1700.0f, 50.0f, 1.0f, "Generate Grid");
 	buttons.emplace_back(myButton0);
-	std::shared_ptr<Button> myButton1 = std::make_shared<Button>(1600.0f, 50.0f, 1.0f, "hello world \n this is a second line.");
+	std::shared_ptr<Button> myButton1 = std::make_shared<Button>(1700.0f, 100.0f, 1.0f, "Generate RecursiveMaze");
 	buttons.emplace_back(myButton1);
-	std::shared_ptr<Button> myButton2 = std::make_shared<Button>(1600.0f, 150.0f, 0.5f, "hello world \n this is a second line. \n and this is an other scale.");
-	buttons.emplace_back(myButton2);
+	std::shared_ptr<Button> myButton2 = std::make_shared<Button>(1700.0f, 150.0f, 1.0f, "Generate PrimsMaze");
+	buttons.emplace_back(myButton2); 
+	std::shared_ptr<Button> myButton3 = std::make_shared<Button>(1700.0f, 200.0f, 1.0f, "Solve");
+	buttons.emplace_back(myButton3);
 	//don't forget to write the button action in the associated function (void buttonAction(int action)).
 	for (int i = 0; i < buttons.size(); i++)
 	{
@@ -21,7 +25,7 @@ int UI::checkButtonsHoverd(sf::Mouse mouse)
 	for (int i = 0; i < buttons.size(); i++)
 	{
 		//box collision.
-		if (mouse.getPosition().x >= buttons[i]->position.x && mouse.getPosition().x <= (buttons[i]->position.x + buttons[i]->size.x))
+		if (mouse.getPosition().x >= buttons[i]->position.x - (buttons[i]->size.x/2) && mouse.getPosition().x <= (buttons[i]->position.x + (buttons[i]->size.x/2)))
 		{
 			if (mouse.getPosition().y >= buttons[i]->position.y && mouse.getPosition().y <= (buttons[i]->position.y + buttons[i]->size.y))
 			{				
@@ -47,9 +51,9 @@ int UI::checkButtonsPressed(sf::Mouse mouse, sf::Event event)
 	for (int i = 0; i < buttons.size(); i++)
 	{
 		//box collision.
-		if (mouse.getPosition().x >= buttons[i]->position.x && mouse.getPosition().x <= (buttons[i]->position.x + buttons[i]->size.x))
+		if (mouse.getPosition().x >= buttons[i]->position.x - (buttons[i]->size.x / 2) && mouse.getPosition().x <= (buttons[i]->position.x + (buttons[i]->size.x / 2)))
 		{
-			if(mouse.getPosition().y >= buttons[i]->position.y && mouse.getPosition().y <= (buttons[i]->position.y + buttons[i]->size.y))
+			if (mouse.getPosition().y >= buttons[i]->position.y && mouse.getPosition().y <= (buttons[i]->position.y + buttons[i]->size.y))
 			{			
 
 				if (event.type == sf::Event::MouseButtonPressed)
@@ -66,11 +70,17 @@ int UI::checkButtonsPressed(sf::Mouse mouse, sf::Event event)
 }
 
 void UI::buttonAction(int action)
-{
-	if (action > -1 && !LeftMousebuffer)
+{		
+	if (action == 0 && buttons[3]->IsPressed != true)
 	{
-		std::cout << "button: " << action << " is pressed." << std::endl;
+		gridRenderd = true;
+		buttons[action]->IsPressed = true;		
+	}	
+	else if (buttons[3]->IsPressed != true && gridRenderd == true)
+	{		
+		buttons[action]->IsPressed = true;
 	}
+	
 }
 
 void UI::draw(sf::RenderWindow* window)
