@@ -75,7 +75,7 @@ void Robot0::setupNodeMap(Grid grid)
 	}
 }
 
-int Robot0::floodFillGetDirection(Grid grid)
+int Robot0::recursiveBacktrackingGetDirection(Grid grid)
 {
 	movingDirection = -1;
 	while (movingDirection < 0)
@@ -140,7 +140,7 @@ void Robot0::movement(Grid& grid, microTime deltaTime)
 	if (!moving)
 	{
 		updateAccesiblity(grid);
-		movingDirection = floodFillGetDirection(grid);
+		movingDirection = recursiveBacktrackingGetDirection(grid);
 		setFuturePosition();
 		move(deltaTime);
 		moving = true;

@@ -264,7 +264,7 @@ void Robot1::updateWallMap(Grid& grid, std::vector<std::shared_ptr<Object>>& ren
 	}
 }
 
-bool Robot1::pathSolvingFloodFill(Grid& grid)
+void Robot1::pathSolvingFloodFill(Grid& grid)
 {
 	//
 	for (int x = 0; x < grid.sizeX; x++)
@@ -328,7 +328,6 @@ bool Robot1::pathSolvingFloodFill(Grid& grid)
 		}
 
 	}
-	return true;
 
 }
 

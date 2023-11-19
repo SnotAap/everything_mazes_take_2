@@ -1,4 +1,4 @@
-#pragma once
+#pragma on
 class Robot0 : public Robot
 {
 
@@ -8,16 +8,15 @@ public:
 
 	std::map<cordinates, std::shared_ptr<Node>> nodeMap;
 
-	void setupNodeMap(Grid grid);
 
-	Robot0(Grid grid);
+	void setupNodeMap(Grid grid);										//a function to setup the nodes required for the other functions to function
 
+	Robot0(Grid grid);													//a constructor which among other things runs the setupNodeMap function
+										
+	int recursiveBacktrackingGetDirection(Grid grid);					//a function which determines the future direction of travel
+	virtual void movement(Grid& grid, microTime deltaTime) override;	//a function which makes up the moving behaviour of the robot
 
-	int floodFillGetDirection(Grid grid);
-
-	virtual void movement(Grid& grid, microTime deltaTime) override;
-
-	virtual void draw(sf::RenderWindow* window) override;
+	virtual void draw(sf::RenderWindow* window) override;				//a draw function which enables the robot to be drawn to the screen
 
 
 };
