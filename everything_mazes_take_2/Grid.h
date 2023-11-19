@@ -20,8 +20,9 @@ public:
 	Grid(int sizeX_, int sizeY_);
 
 	void setup(std::vector<std::shared_ptr<Object>>& renderList);
+	void resetGrid();
 	void recursiveBacktrackingMaze();
-	void primsMaze();
+	void primsMaze();	
 
 	bool removeWalls(microTime deltaTime);
 	bool devRemoveWalls();

@@ -9,6 +9,7 @@ public:
 	sf::Font font;
 	sf::Text text;
 	std::string fontDirectory = "..\\content\\arial.ttf";
+	bool IsPressed = false;	
 
 	Button();
 	Button(float x_, float y_, float scale, std::string sentence_);
