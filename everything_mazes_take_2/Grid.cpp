@@ -136,6 +136,8 @@ void Grid::resetGrid()
 				for (int i = 0; i < 4; i++)
 				{
 					cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+					tileMap[myCords]->color = sf::Color(0, 191, 255, 255);
+					tileMap[myCords]->shape.setFillColor(tileMap[myCords]->color);
 					wallMap[myCords][i]->active = true;
 					tileMap[myCords]->visited = false;
 				}

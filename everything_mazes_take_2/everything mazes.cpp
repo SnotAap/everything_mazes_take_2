@@ -34,6 +34,7 @@ int main()
     
     std::shared_ptr<BaseRobot> robot0;
     std::shared_ptr<Robot0> robot1;
+    
 
     while (window.isOpen())
     {
@@ -57,7 +58,7 @@ int main()
             grid.setup(renderList);              
             myUI.buttons[0]->IsPressed = false;
         }
-        if (myUI.buttons[1]->IsPressed == true) 
+        if (myUI.buttons[1]->IsPressed == true)
         {             
             grid.resetGrid();
             grid.recursiveBacktrackingMaze();
@@ -66,13 +67,20 @@ int main()
             myUI.buttons[1]->IsPressed = false;
         }
         if (myUI.buttons[2]->IsPressed == true)
-        {                  
+        {       
+            grid.resetGrid();
+            grid.primsMaze();
+            grid.devRemoveWalls();
+            grid.removedWallsOrderd.clear();
+            myUI.buttons[2]->IsPressed = false;            
+        } 
+        if (myUI.buttons[3]->IsPressed == true && solve == false)
+        {
             robot0 = std::make_shared<BaseRobot>(grid);
             renderList.emplace_back(robot0);
-            robot1 = std::make_shared<Robot0>(grid);                       
+            robot1 = std::make_shared<Robot0>(grid);
             renderList.emplace_back(robot1);
-            solve = true;
-            myUI.buttons[2]->IsPressed = false;
+            solve = true;            
         }
        
         //
@@ -111,6 +119,7 @@ int main()
                 if (robot1->gridPos == grid.startAndEndCords.second) 
                 {
                     solve = false;
+                    myUI.buttons[3]->IsPressed = false;
                 }
             }           
             break;
