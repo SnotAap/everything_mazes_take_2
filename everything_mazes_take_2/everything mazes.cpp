@@ -52,7 +52,8 @@ int main()
         myUI.checkButtonsHoverd(myMouse);   
 
         if (myUI.buttons[0]->IsPressed == true) 
-        {                      
+        {    
+            grid.resetGrid();
             grid.setup(renderList);              
             myUI.buttons[0]->IsPressed = false;
         }

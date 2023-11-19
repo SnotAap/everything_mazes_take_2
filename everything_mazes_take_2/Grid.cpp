@@ -12,101 +12,106 @@ Grid::Grid(int sizeX_, int sizeY_)
 
 void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 {
-	int tileSizeX = int(floor(1920 / (sizeX + 4)));
-	int tilesSizeY = int(floor(1080 / (sizeY + 4)));
-	tileSize;
-	if (tileSizeX < tilesSizeY) tileSize = tileSizeX;
-	else tileSize = tilesSizeY;
-	//
-	cordinates cords = std::pair<int, int>(std::make_pair(NULL, NULL));
-	plane = std::make_shared<Tile>(float(1920 / 2), float(1080 / 2), cords, float(tileSize * (sizeX)), float(tileSize * (sizeY)), sf::Color(0, 0, 0, 69), 0.0f);
-	plane->shape.setOrigin(sf::Vector2f(plane->size.x / 2, plane->size.y / 2));
-	renderList.emplace_back(plane);
-	//
-	for (int x = 0; x < sizeX; x++)
+	if (tileMap.size() == 0 && wallMap.size() == 0)
 	{
-		for (int y = 0; y < sizeY; y++)
+		int tileSizeX = int(floor(1920 / (sizeX + 4)));
+		int tilesSizeY = int(floor(1080 / (sizeY + 4)));
+		tileSize;
+		if (tileSizeX < tilesSizeY) tileSize = tileSizeX;
+		else tileSize = tilesSizeY;
+		//
+		cordinates cords = std::pair<int, int>(std::make_pair(NULL, NULL));
+		plane = std::make_shared<Tile>(float(1920 / 2), float(1080 / 2), cords, float(tileSize * (sizeX)), float(tileSize * (sizeY)), sf::Color(0, 0, 0, 69), 0.0f);
+		plane->shape.setOrigin(sf::Vector2f(plane->size.x / 2, plane->size.y / 2));
+		renderList.emplace_back(plane);
+		//
+		for (int x = 0; x < sizeX; x++)
 		{
-			float positionX = float((plane->position.x - (plane->size.x / 2) + (x * (tileSize))));
-			float positionY = float((plane->position.y - (plane->size.y / 2) + (y * (tileSize))));
-			//			
-			cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
-			std::shared_ptr<Wall> wallN = std::make_shared<Wall>(float(positionX), float(positionY), float(tileSize), float(3), 0.0f);
-			wallN->active = true;
-			std::shared_ptr<Wall> wallE = std::make_shared<Wall>(float(positionX + tileSize), float(positionY + tileSize), float(tileSize), float(3), 270.0f);
-			wallE->active = true;
-			std::shared_ptr<Wall> wallS = std::make_shared<Wall>(float(positionX + tileSize), float(positionY + tileSize), float(tileSize), float(3), 180.0f);
-			wallS->active = true;
-			std::shared_ptr<Wall> wallW = std::make_shared<Wall>(float(positionX), float(positionY), float(tileSize), float(3), 90.0f);
-			wallW->active = true;
-			//
-			std::shared_ptr<Tile> tile = std::make_shared<Tile>(positionX, positionY, myCords, float(tileSize), float(tileSize), sf::Color(0, 191, 255, 255), 0.0f);
-			//
-			std::shared_ptr<Wall> myWalls[4] = { wallN, wallE, wallS, wallW };
-			for (int i = 0; i < 4; i++)
+			for (int y = 0; y < sizeY; y++)
 			{
-				wallMap[myCords][i] = myWalls[i];
-				tile->walls[i] = wallMap[myCords][i];
+				float positionX = float((plane->position.x - (plane->size.x / 2) + (x * (tileSize))));
+				float positionY = float((plane->position.y - (plane->size.y / 2) + (y * (tileSize))));
+				//			
+				cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+				std::shared_ptr<Wall> wallN = std::make_shared<Wall>(float(positionX), float(positionY), float(tileSize), float(3), 0.0f);
+				wallN->active = true;
+				std::shared_ptr<Wall> wallE = std::make_shared<Wall>(float(positionX + tileSize), float(positionY + tileSize), float(tileSize), float(3), 270.0f);
+				wallE->active = true;
+				std::shared_ptr<Wall> wallS = std::make_shared<Wall>(float(positionX + tileSize), float(positionY + tileSize), float(tileSize), float(3), 180.0f);
+				wallS->active = true;
+				std::shared_ptr<Wall> wallW = std::make_shared<Wall>(float(positionX), float(positionY), float(tileSize), float(3), 90.0f);
+				wallW->active = true;
+				//
+				std::shared_ptr<Tile> tile = std::make_shared<Tile>(positionX, positionY, myCords, float(tileSize), float(tileSize), sf::Color(0, 191, 255, 255), 0.0f);
+				//
+				std::shared_ptr<Wall> myWalls[4] = { wallN, wallE, wallS, wallW };
+				for (int i = 0; i < 4; i++)
+				{
+					wallMap[myCords][i] = myWalls[i];
+					tile->walls[i] = wallMap[myCords][i];
+				}
+				//	
+				tileMap[myCords] = tile;
+				renderList.emplace_back(tile);
 			}
-			//	
-			tileMap[myCords] = tile;			
-			renderList.emplace_back(tile);
 		}
-	}
-	//
-	std::vector<cordinates> expressedwallMap;
-	//
-	for (int x = 0; x < sizeX; x++)
-	{
-		for (int y = 0; y < sizeY; y++)
+		//
+		std::vector<cordinates> expressedwallMap;
+		//
+		for (int x = 0; x < sizeX; x++)
 		{
-			cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
-			std::shared_ptr<Tile> northNeighbor;
-			std::shared_ptr<Tile> eastNeighbor;
-			std::shared_ptr<Tile> southNeighbor;
-			std::shared_ptr<Tile> westNeighbor;
-			//
-			if (x > 0)
+			for (int y = 0; y < sizeY; y++)
 			{
-				cordinates prevXCords = std::pair<int, int>(std::make_pair(x - 1, y));
-				wallMap[myCords][West] = wallMap[prevXCords][East];
-				westNeighbor = tileMap[prevXCords];
-			}
-			if (y > 0)
-			{
-				cordinates prevYCords = std::pair<int, int>(std::make_pair(x, y - 1));
-				wallMap[myCords][North] = wallMap[prevYCords][South];
-				northNeighbor = tileMap[prevYCords];
-			}
-			//
-			expressedwallMap.emplace_back(myCords);
-			if (x < sizeX - 1)
-			{
-				cordinates nextXCords = std::pair<int, int>(std::make_pair(x + 1, y));
-				eastNeighbor = tileMap[nextXCords];
-			}
-			if (y < sizeY - 1)
-			{
-				cordinates nextYCords = std::pair<int, int>(std::make_pair(x, y + 1));
-				southNeighbor = tileMap[nextYCords];
-			}
+				cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+				std::shared_ptr<Tile> northNeighbor;
+				std::shared_ptr<Tile> eastNeighbor;
+				std::shared_ptr<Tile> southNeighbor;
+				std::shared_ptr<Tile> westNeighbor;
+				//
+				if (x > 0)
+				{
+					cordinates prevXCords = std::pair<int, int>(std::make_pair(x - 1, y));
+					wallMap[myCords][West] = wallMap[prevXCords][East];
+					westNeighbor = tileMap[prevXCords];
+				}
+				if (y > 0)
+				{
+					cordinates prevYCords = std::pair<int, int>(std::make_pair(x, y - 1));
+					wallMap[myCords][North] = wallMap[prevYCords][South];
+					northNeighbor = tileMap[prevYCords];
+				}
+				//
+				expressedwallMap.emplace_back(myCords);
+				if (x < sizeX - 1)
+				{
+					cordinates nextXCords = std::pair<int, int>(std::make_pair(x + 1, y));
+					eastNeighbor = tileMap[nextXCords];
+				}
+				if (y < sizeY - 1)
+				{
+					cordinates nextYCords = std::pair<int, int>(std::make_pair(x, y + 1));
+					southNeighbor = tileMap[nextYCords];
+				}
 
-			//
-			std::shared_ptr<Tile> myneighbors[4] = { northNeighbor, eastNeighbor, southNeighbor, westNeighbor };
-			for (int i = 0; i < 4; i++)
+				//
+				std::shared_ptr<Tile> myneighbors[4] = { northNeighbor, eastNeighbor, southNeighbor, westNeighbor };
+				for (int i = 0; i < 4; i++)
+				{
+					tileMap[myCords]->neighbors[i] = myneighbors[i];
+				}
+			}
+		}
+
+		for (int i = 0; i < expressedwallMap.size(); i++)
+		{
+			for (int j = 0; j < 4; j++)
 			{
-				tileMap[myCords]->neighbors[i] = myneighbors[i];
+				renderList.emplace_back(wallMap[expressedwallMap[i]][j]);
 			}
 		}
 	}
 
-	for (int i = 0; i < expressedwallMap.size(); i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			renderList.emplace_back(wallMap[expressedwallMap[i]][j]);
-		}
-	}
+	
 }
 /*void Grid::render(std::vector<std::shared_ptr<Object>>& renderList)
 {	
@@ -122,15 +127,18 @@ void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 
 void Grid::resetGrid()
 {
-	for (int x = 0; x < sizeX; x++)
+	if (wallMap.size() != 0 && tileMap.size() != 0)
 	{
-		for (int y = 0; y < sizeY; y++)
+		for (int x = 0; x < sizeX; x++)
 		{
-			for (int i = 0; i < 4; i++)
+			for (int y = 0; y < sizeY; y++)
 			{
-				cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
-				wallMap[myCords][i]->active = true;
-				tileMap[myCords]->visited = false;
+				for (int i = 0; i < 4; i++)
+				{
+					cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+					wallMap[myCords][i]->active = true;
+					tileMap[myCords]->visited = false;
+				}
 			}
 		}
 	}
