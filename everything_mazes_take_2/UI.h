@@ -2,17 +2,31 @@
 class UI
 {
 public:
+	#define startState 0
+	#define generateChoiseState 1
+	#define generateState 2
+	#define solveState 3
+	#define solvingState 4
+	#define solvedState 5
+
+
+	
+
 	std::vector<std::shared_ptr<Button>> buttons;
-	std::shared_ptr<std::vector<std::shared_ptr<Object>>> renderList;
-
-	UI(std::vector<std::shared_ptr<Object>>& renderList_);
+	std::vector<std::shared_ptr<Button>> activeButtons;
+	std::vector<std::shared_ptr<Text>> text;
+	std::vector<std::shared_ptr<Text>> activeText;
+	UI();
+	UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderList_);
 	~UI();
-	bool LeftMousePressed = false;
-	bool LeftMousebuffer = false;
 
+	bool LeftMousePressed = false;
+	bool lastLeftMousePressed = false;
+
+	bool mousePressed(sf::Event event);
 	int checkButtonsHoverd(sf::Mouse mouse);
-	int checkButtonsPressed(sf::Mouse mouse, sf::Event event);
-	void buttonAction(int action);
+	int checkButtonsPressed(sf::Mouse mouse);
+	void buttonAction(sf::Font font, int& state, int action, Grid& grid, std::vector<std::shared_ptr<Object>>& renderList, std::vector<std::pair<std::shared_ptr<Robot>, bool>>& robotList, bool& solve);
 	void draw(sf::RenderWindow* window);
 
 	//_vvv_all_actions_go_here_vvv_\\

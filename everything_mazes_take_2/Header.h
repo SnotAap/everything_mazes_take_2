@@ -19,7 +19,7 @@
 #include "Object.h"
 #include "Button.h"
 #include "Text.h"
-#include "UI.h"
+
 #include "Line.h"
 #include "Wall.h"
 #include "CustomTypes.h"
@@ -30,6 +30,7 @@
 #include "Robot.h"
 #include "Robot0.h"
 #include "Robot1.h"
+#include "UI.h"
 
 
 
