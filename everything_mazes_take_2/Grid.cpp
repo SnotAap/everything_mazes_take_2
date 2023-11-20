@@ -15,7 +15,7 @@ Grid::~Grid()
 
 }
 
-void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
+void Grid::setup()
 {
 	if (tileMap.size() == 0 && wallMap.size() == 0)
 	{
@@ -129,6 +129,14 @@ void Grid::setup(std::vector<std::shared_ptr<Object>>& renderList)
 	}
 	
 }*/
+
+void Grid::clear()
+{
+	wallMap.clear();
+	tileMap.clear();
+	renderList.clear();
+}
+
 
 void Grid::resetGrid()
 {
@@ -373,4 +381,12 @@ bool Grid::devRemoveWalls()
 
 	return true;
 	
+}
+
+void Grid::display(sf::RenderWindow* window)
+{
+	for (int i = 0; i < renderList.size(); i++)
+	{
+		renderList[i]->draw(window);
+	}
 }

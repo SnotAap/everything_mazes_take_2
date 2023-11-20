@@ -165,8 +165,9 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 	switch (action)
 	{
 	case 0:
-		grid.resetGrid();
-		grid.setup(renderList);
+		//grid.resetGrid();
+		grid.clear();
+		grid.setup();
 
 		buttons[0]->IsPressed = false;
 		state++;

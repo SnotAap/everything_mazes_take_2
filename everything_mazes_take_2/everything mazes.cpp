@@ -102,7 +102,7 @@ int main()
         {            
             renderList[i]->draw(&window);             
         }
-        
+        grid.display(&window);
         for (int i = 0; i < myUI.activeButtons.size(); i++)
         {
             myUI.activeButtons[i]->draw(&window);
