@@ -140,7 +140,7 @@ int Robot0::floodFillGetDirection(Grid grid)
 	return movingDirection;
 }
 
-void Robot0::movement(Grid& grid, microTime deltaTime)
+void Robot0::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList)
 {
 	if (!moving)
 	{

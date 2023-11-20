@@ -15,7 +15,7 @@ public:
 
 	int floodFillGetDirection(Grid grid);
 
-	virtual void movement(Grid& grid, microTime deltaTime) override;
+	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList) override;
 
 	virtual void draw(sf::RenderWindow* window) override;
 

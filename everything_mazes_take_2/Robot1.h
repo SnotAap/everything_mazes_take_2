@@ -20,7 +20,7 @@ public:
 	void updateWallMap(Grid& grid, std::vector<std::shared_ptr<Object>>& renderList);
 	bool pathSolvingFloodFill(Grid& grid);
 	int getDirection(Grid& grid);
-	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList);
+	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList) override;
 	virtual void draw(sf::RenderWindow* window) override;
 	
 };

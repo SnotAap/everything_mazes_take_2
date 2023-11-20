@@ -184,7 +184,7 @@ bool Robot::move(microTime deltaTime)
 	return false;
 }
 
-void Robot::movement(Grid& grid, microTime deltaTime)
+void Robot::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList) 
 {	
 	
 	if (!moving)

@@ -30,7 +30,7 @@ public:
 	bool moveWest(microTime deltaTime);
 	bool move(microTime deltaTime);
 
-	virtual void movement(Grid& grid, microTime deltaTime);
+	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList);
 
 	virtual void draw(sf::RenderWindow* window) override;
 };
