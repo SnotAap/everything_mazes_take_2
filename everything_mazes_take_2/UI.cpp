@@ -166,9 +166,8 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 	{
 	case 0:
 		grid.resetGrid();
-		grid.setup();
-		grid.prevSizeX = grid.sizeX;
-		grid.prevSizeY = grid.sizeY;
+		grid.setup(renderList);
+
 		buttons[0]->IsPressed = false;
 		state++;
 		break;
