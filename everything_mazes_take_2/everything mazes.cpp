@@ -42,7 +42,7 @@ int main()
         myUI.checkButtonsHoverd(myMouse);  
               
         int action = myUI.checkButtonsPressed(myMouse);
-        myUI.buttonAction(font, state, action, grid, renderList, robotList, solve);
+        myUI.buttonAction(font, state, action, grid, robotList, solve);
         //myUI.ButtonManager(state);
         //
         switch (state)
@@ -66,12 +66,13 @@ int main()
             myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[11]);
             myUI.activeButtons.emplace_back(myUI.buttons[12]);
+            myUI.activeButtons.emplace_back(myUI.buttons[20]);
 
             break;
         case generateState:
             myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[13]);
-
+            myUI.activeButtons.emplace_back(myUI.buttons[20]);
             if (grid.removeWalls(deltaTime))
             {
                 state++;
@@ -83,20 +84,27 @@ int main()
             myUI.activeButtons.emplace_back(myUI.buttons[15]);
             myUI.activeButtons.emplace_back(myUI.buttons[16]);
             myUI.activeButtons.emplace_back(myUI.buttons[17]);
-
+            
             break;
         case solvingState:
             myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[18]);
+            myUI.activeButtons.emplace_back(myUI.buttons[19]);
+            
 
             for (int i = 0; i < robotList.size(); i++)
             {
-                if (robotList[i].second)
+                if (robotList[i].second && robotList[i].first->gridPos != grid.startAndEndCords.second)
                 {
                     robotList[i].first->movement(grid, deltaTime, renderList);                                            
                 }
             }
             break;
+        case solvedState:
+            myUI.activeButtons.clear();
+            myUI.activeButtons.emplace_back(myUI.buttons[18]);
+            
+            break; 
         }
         for (int i = 0; i < renderList.size(); i++)
         {            

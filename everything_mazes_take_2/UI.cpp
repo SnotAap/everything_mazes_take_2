@@ -20,24 +20,24 @@ UI::UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderLis
 	//
 	std::shared_ptr<Button> gridSizeXButton = std::make_shared<Button>(1700.0f, 150.0f, 1.0f, "sizeX: " + std::to_string(grid.sizeX));
 	buttons.emplace_back(gridSizeXButton);
-	std::shared_ptr<Button> gridSizeXPlus5Button = std::make_shared<Button>(1600.0f, 150.0f, 1.0f, "+5");
+	std::shared_ptr<Button> gridSizeXPlus5Button = std::make_shared<Button>(1800.0f, 150.0f, 1.0f, "+5");
 	buttons.emplace_back(gridSizeXPlus5Button);
-	std::shared_ptr<Button> gridSizeXPlus1Button = std::make_shared<Button>(1550.0f, 150.0f, 1.0f, "+1");
+	std::shared_ptr<Button> gridSizeXPlus1Button = std::make_shared<Button>(1850.0f, 150.0f, 1.0f, "+1");
 	buttons.emplace_back(gridSizeXPlus1Button);
-	std::shared_ptr<Button> gridSizeXMinus5Button = std::make_shared<Button>(1800.0f, 150.0f, 1.0f, "-5");
+	std::shared_ptr<Button> gridSizeXMinus5Button = std::make_shared<Button>(1600.0f, 150.0f, 1.0f, "-5");
 	buttons.emplace_back(gridSizeXMinus5Button);
-	std::shared_ptr<Button> gridSizeXMinus1Button = std::make_shared<Button>(1850.0f, 150.0f, 1.0f, "-1");
+	std::shared_ptr<Button> gridSizeXMinus1Button = std::make_shared<Button>(1550.0f, 150.0f, 1.0f, "-1");
 	buttons.emplace_back(gridSizeXMinus1Button);
 	//
 	std::shared_ptr<Button> gridSizeYButton = std::make_shared<Button>(1700.0f, 200.0f, 1.0f, "sizeY: " + std::to_string(grid.sizeY));
 	buttons.emplace_back(gridSizeYButton);
-	std::shared_ptr<Button> gridSizeYPlus5Button = std::make_shared<Button>(1600.0f, 200.0f, 1.0f, "+5");
+	std::shared_ptr<Button> gridSizeYPlus5Button = std::make_shared<Button>(1800.0f, 200.0f, 1.0f, "+5");
 	buttons.emplace_back(gridSizeYPlus5Button);
-	std::shared_ptr<Button> gridSizeYPlus1Button = std::make_shared<Button>(1550.0f, 200.0f, 1.0f, "+1");
+	std::shared_ptr<Button> gridSizeYPlus1Button = std::make_shared<Button>(1850.0f, 200.0f, 1.0f, "+1");
 	buttons.emplace_back(gridSizeYPlus1Button);
-	std::shared_ptr<Button> gridSizeYMinus5Button = std::make_shared<Button>(1800.0f, 200.0f, 1.0f, "-5");
+	std::shared_ptr<Button> gridSizeYMinus5Button = std::make_shared<Button>(1600.0f, 200.0f, 1.0f, "-5");
 	buttons.emplace_back(gridSizeYMinus5Button);
-	std::shared_ptr<Button> gridSizeYMinus1Button = std::make_shared<Button>(1850.0f, 200.0f, 1.0f, "-1");
+	std::shared_ptr<Button> gridSizeYMinus1Button = std::make_shared<Button>(1550.0f, 200.0f, 1.0f, "-1");
 	buttons.emplace_back(gridSizeYMinus1Button);
 	//
 	std::shared_ptr<Button> recursiveMazeGenerateButton = std::make_shared<Button>(1700.0f, 100.0f, 1.0f, "generate recursiveMaze");
@@ -56,6 +56,11 @@ UI::UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderLis
 	buttons.emplace_back(solveButton);
 	std::shared_ptr<Button> abortSolvingButton = std::make_shared<Button>(1700.0f, 100.0f, 1.0f, "stop solving");
 	buttons.emplace_back(abortSolvingButton);
+	std::shared_ptr<Button> solveAStar = std::make_shared<Button>(1700.0f, 150.0f, 1.0f, "solve A*");
+	buttons.emplace_back(solveAStar);
+	std::shared_ptr<Button> backButton = std::make_shared<Button>(1750.0f, 50.0f, 1.0f, "back");
+	buttons.emplace_back(backButton);
+	
 	//don't forget to write the button action in the associated function (void buttonAction(int action)).
 }
 
@@ -160,7 +165,7 @@ int UI::checkButtonsPressed(sf::Mouse mouse)
 	return -1;
 }
 
-void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::vector<std::shared_ptr<Object>>& renderList, std::vector<std::pair<std::shared_ptr<Robot>, bool>>& robotList, bool& solve)
+void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::vector<std::pair<std::shared_ptr<Robot>, bool>>& robotList, bool& solve)
 {	
 	switch (action)
 	{
@@ -273,7 +278,8 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 
 	case 16:
 	{
-		std::shared_ptr<Robot> robot1 = std::make_shared<Robot1>(grid, font, renderList);
+		
+		std::shared_ptr<Robot> robot1 = std::make_shared<Robot1>(grid, font, grid.renderList);
 		std::pair<std::shared_ptr<Robot>, bool> robot1Pair = std::pair<std::shared_ptr<Robot>, bool>(std::make_pair(robot1, false));
 		robotList.emplace_back(robot1Pair);
 		robotList[robotList.size() - 1].second = true;
@@ -293,8 +299,17 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		state = 0;
 		break;
 	}
+	case 19:
+		pathSolvingAStar(grid, grid.renderList);
 
+		break;
+	case 20:
+		state--;
+		break;
 	}
+
+
+
 	
 }
 

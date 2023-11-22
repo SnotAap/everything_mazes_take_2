@@ -26,7 +26,7 @@ public:
 	bool mousePressed(sf::Event event);
 	int checkButtonsHoverd(sf::Mouse mouse);
 	int checkButtonsPressed(sf::Mouse mouse);
-	void buttonAction(sf::Font font, int& state, int action, Grid& grid, std::vector<std::shared_ptr<Object>>& renderList, std::vector<std::pair<std::shared_ptr<Robot>, bool>>& robotList, bool& solve);
+	void buttonAction(sf::Font font, int& state, int action, Grid& grid, std::vector<std::pair<std::shared_ptr<Robot>, bool>>& robotList, bool& solve);
 	void draw(sf::RenderWindow* window);
 
 	//_vvv_all_actions_go_here_vvv_\\
