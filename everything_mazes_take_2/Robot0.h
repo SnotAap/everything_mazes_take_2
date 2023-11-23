@@ -13,7 +13,7 @@ public:
 	Robot0(Grid grid);
 	~Robot0();
 
-	int floodFillGetDirection(Grid grid);
+	int depthFirstGetDirection(Grid grid);
 
 	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList) override;
 

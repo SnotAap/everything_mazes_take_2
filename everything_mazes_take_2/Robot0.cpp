@@ -80,7 +80,7 @@ void Robot0::setupNodeMap(Grid grid)
 	}
 }
 
-int Robot0::floodFillGetDirection(Grid grid)
+int Robot0::depthFirstGetDirection(Grid grid)
 {
 	movingDirection = -1;
 	while (movingDirection < 0)
