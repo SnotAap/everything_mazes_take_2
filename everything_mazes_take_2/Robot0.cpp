@@ -145,7 +145,7 @@ void Robot0::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_p
 	if (!moving)
 	{
 		updateAccesiblity(grid);
-		movingDirection = floodFillGetDirection(grid);
+		movingDirection = depthFirstGetDirection(grid);
 		setFuturePosition();
 		move(deltaTime);
 		moving = true;
