@@ -66,13 +66,15 @@ int main()
             myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[11]);
             myUI.activeButtons.emplace_back(myUI.buttons[12]);
-            myUI.activeButtons.emplace_back(myUI.buttons[20]);
+            myUI.activeButtons.emplace_back(myUI.buttons[21]);
 
             break;
         case generateState:
             myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[13]);
-            myUI.activeButtons.emplace_back(myUI.buttons[20]);
+            myUI.activeButtons.emplace_back(myUI.buttons[14]);
+            myUI.activeButtons.emplace_back(myUI.buttons[21]);
+            
             if (grid.removeWalls(deltaTime))
             {
                 state++;
@@ -80,16 +82,16 @@ int main()
             break;
         case solveState:
             myUI.activeButtons.clear();
-            myUI.activeButtons.emplace_back(myUI.buttons[14]);
             myUI.activeButtons.emplace_back(myUI.buttons[15]);
             myUI.activeButtons.emplace_back(myUI.buttons[16]);
             myUI.activeButtons.emplace_back(myUI.buttons[17]);
+            myUI.activeButtons.emplace_back(myUI.buttons[18]);
             
             break;
         case solvingState:
             myUI.activeButtons.clear();
-            myUI.activeButtons.emplace_back(myUI.buttons[18]);
             myUI.activeButtons.emplace_back(myUI.buttons[19]);
+            myUI.activeButtons.emplace_back(myUI.buttons[20]);
             
 
             for (int i = 0; i < robotList.size(); i++)
@@ -102,7 +104,7 @@ int main()
             break;
         case solvedState:
             myUI.activeButtons.clear();
-            myUI.activeButtons.emplace_back(myUI.buttons[18]);
+            myUI.activeButtons.emplace_back(myUI.buttons[19]);
             
             break; 
         }

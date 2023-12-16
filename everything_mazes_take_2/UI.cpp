@@ -44,6 +44,8 @@ UI::UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderLis
 	buttons.emplace_back(recursiveMazeGenerateButton);
 	std::shared_ptr<Button> PrimsMazeGenerateButton = std::make_shared<Button>(1700.0f, 150.0f, 1.0f, "generate primsMaze");
 	buttons.emplace_back(PrimsMazeGenerateButton);
+	std::shared_ptr<Button> instanteGenerateButton = std::make_shared<Button>(1700.0f, 150.0f, 1.0f, "instant Generate");
+	buttons.emplace_back(instanteGenerateButton);
 	std::shared_ptr<Button> abortMazeGenerateButton = std::make_shared<Button>(1700.0f, 200.0f, 1.0f, "stop Generating");
 	buttons.emplace_back(abortMazeGenerateButton);
 	std::shared_ptr<Button> solveRobot = std::make_shared<Button>(1700.0f, 100.0f, 1.0f, "Robot solve");
@@ -173,7 +175,8 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		//grid.resetGrid();
 		grid.clear();
 		grid.setup();
-
+		grid.removedWallsOrderd.clear();
+		grid.wallRemoveItorater = 0;
 		buttons[0]->IsPressed = false;
 		state++;
 		break;
@@ -252,12 +255,20 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		state++;
 		break;
 	case 13:
+		grid.devRemoveWalls();
+		grid.removedWallsOrderd.clear();
+		grid.wallRemoveItorater = 0;
+		state++;
+
+
+		break;
+	case 14:
 		grid.removedWallsOrderd.clear();
 		grid.wallRemoveItorater = 0;
 		state--;
 
 		break;
-	case 14:
+	case 15:
 	{
 		std::shared_ptr<Robot> robot = std::make_shared<Robot>(grid);
 		std::pair<std::shared_ptr<Robot>, bool> robotPair = std::pair<std::shared_ptr<Robot>, bool>(std::make_pair(robot, false));
@@ -267,7 +278,7 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		break;
 	}
 
-	case 15:
+	case 16:
 	{
 		std::shared_ptr<Robot> robot0 = std::make_shared<Robot0>(grid);
 		std::pair<std::shared_ptr<Robot>, bool> robot0Pair = std::pair<std::shared_ptr<Robot>, bool>(std::make_pair(robot0, false));
@@ -276,7 +287,7 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		break;
 	}
 
-	case 16:
+	case 17:
 	{
 		
 		std::shared_ptr<Robot> robot1 = std::make_shared<Robot1>(grid, font, grid.renderList);
@@ -285,10 +296,10 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		robotList[robotList.size() - 1].second = true;
 		break;
 	}
-	case 17:
+	case 18:
 		state++;
 		break;
-	case 18:
+	case 19:
 	{
 		for (int i = 0; i < robotList.size(); i++)
 		{
@@ -299,11 +310,11 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		state = 0;
 		break;
 	}
-	case 19:
+	case 20:
 		pathSolvingAStar(grid, grid.renderList);
 
 		break;
-	case 20:
+	case 21:
 		state--;
 		break;
 	}
