@@ -143,7 +143,7 @@ std::vector<cordinates> pathSolvingAStar(Grid& grid, std::vector<std::shared_ptr
 		std::shared_ptr<Line> line = std::make_shared<Line>(sf::Vector2f(position1X, position1Y), sf::Vector2f(position2X, position2Y), float(grid.tileSize / 7));
 		renderList.emplace_back(line);
 		path.emplace_back(p->position);
-		std::cout << p->position.first << ", " << p->position.second << std::endl;
+		//std::cout << p->position.first << ", " << p->position.second << std::endl;
 		p = p->parent;
 	}
 	
@@ -243,7 +243,7 @@ bool pathSolvingFloodFill(sf::Font& font, std::map<cordinates, std::shared_ptr<N
 		//give a rating to each adjecent tile.
 		for (std::list<std::shared_ptr<Node>>::iterator it = queue.begin(); it != queue.end(); ++it)
 		{
-			std::cout << "(" << (*it)->position.first << ", " << (*it)->position.second << "); ";
+			//std::cout << "(" << (*it)->position.first << ", " << (*it)->position.second << "); ";
 			floodedMaze[(*it)->position] = depth;
 			sf::Vector2f position = sf::Vector2f(grid.tileMap[(*it)->position]->shape.getPosition().x + (grid.tileSize / 10), grid.tileMap[(*it)->position]->shape.getPosition().y + (grid.tileSize / 10));
 			//sf::Vector2f position = sf::Vector2f(grid.tileMap[(*it)->position]->shape.getPosition().x, grid.tileMap[(*it)->position]->shape.getPosition().y);
@@ -269,7 +269,7 @@ bool pathSolvingFloodFill(sf::Font& font, std::map<cordinates, std::shared_ptr<N
 			//remove rated tile
 			toBeRemoved.emplace_back(*it);			
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 		return false;
 	}
 	else
