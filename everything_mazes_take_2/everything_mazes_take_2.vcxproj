@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="consoleCommands.cpp" />
     <ClCompile Include="CustomTypes.cpp" />
     <ClCompile Include="everything mazes.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="consoleCommands.h" />
     <ClInclude Include="CustomTypes.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Header.h" />

@@ -269,6 +269,182 @@ void Robot1::updateWallMap(Grid& grid, std::vector<std::shared_ptr<Object>>& ren
 	}
 }
 
+void Robot1::instantSetupWalls(Grid& grid)
+{
+	//
+	for (int x = 0; x < grid.sizeX; x++)
+	{
+		for (int y = 0; y < grid.sizeY; y++)
+		{
+			float positionX = float((grid.plane->position.x - (grid.plane->size.x / 2) + (x * (grid.tileSize))));
+			float positionY = float((grid.plane->position.y - (grid.plane->size.y / 2) + (y * (grid.tileSize))));
+			//			
+			cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+			std::shared_ptr<Wall> wallN = std::make_shared<Wall>(float(positionX), float(positionY), float(tileSize), float(3), 0.0f, sf::Color::Yellow);
+			wallN->active = false;
+			std::shared_ptr<Wall> wallE = std::make_shared<Wall>(float(positionX + tileSize), float(positionY + tileSize), float(tileSize), float(3), 270.0f, sf::Color::Yellow);
+			wallE->active = false;
+			std::shared_ptr<Wall> wallS = std::make_shared<Wall>(float(positionX + tileSize), float(positionY + tileSize), float(tileSize), float(3), 180.0f, sf::Color::Yellow);
+			wallS->active = false;
+			std::shared_ptr<Wall> wallW = std::make_shared<Wall>(float(positionX), float(positionY), float(tileSize), float(3), 90.0f, sf::Color::Yellow);
+			wallW->active = false;
+			//
+			std::shared_ptr<Wall> myWalls[4] = { wallN, wallE, wallS, wallW };
+			for (int i = 0; i < 4; i++)
+			{
+				robotWallMap[myCords][i] = myWalls[i];
+			}
+			//
+		}
+	}
+	//
+	for (int x = 0; x < grid.sizeX; x++)
+	{
+		for (int y = 0; y < grid.sizeY; y++)
+		{
+			cordinates myCords = std::pair<int, int>(std::make_pair(x, y));
+			//
+			if (x > 0)
+			{
+				cordinates prevXCords = std::pair<int, int>(std::make_pair(x - 1, y));
+				robotWallMap[myCords][West] = robotWallMap[prevXCords][East];
+			}
+			if (y > 0)
+			{
+				cordinates prevYCords = std::pair<int, int>(std::make_pair(x, y - 1));
+				robotWallMap[myCords][North] = robotWallMap[prevYCords][South];
+			}
+			//
+			if (x < grid.sizeX - 1)
+			{
+				cordinates nextXCords = std::pair<int, int>(std::make_pair(x + 1, y));
+				robotWallMap[myCords][East] = robotWallMap[nextXCords][West];
+			}
+			if (y < grid.sizeY - 1)
+			{
+				cordinates nextYCords = std::pair<int, int>(std::make_pair(x, y + 1));
+				robotWallMap[myCords][South] = robotWallMap[nextYCords][North];
+			}
+
+		}
+	}
+
+}
+void Robot1::instantUpdateWallMap(Grid& grid)
+{
+	//std::shared_ptr<Wall> myWalls[4];
+//for (int i = 0; i < 4; i++)
+//{
+//	robotWallMap[gridPos][i]->active = grid.wallMap[gridPos][i]->active;
+//}
+	std::vector<cordinates> visibleTiles;
+	visibleTiles.emplace_back(gridPos);
+	std::vector<std::shared_ptr<Wall>[4]>myWalls;
+
+	bool wall = false;
+	cordinates prevCords = gridPos;
+	cordinates myCords;
+	while (!wall) //North.
+	{
+		if (prevCords.second > 0)
+		{
+			myCords = std::pair<int, int>(prevCords.first, prevCords.second - 1);
+			if (!grid.wallMap[prevCords][nodes[prevCords]->getSide(nodes[myCords])]->active)
+			{
+				if (!seenTiles[myCords])
+				{
+					visibleTiles.emplace_back(myCords);
+					prevCords = myCords;
+				}
+				else wall = true;
+			}
+			else wall = true;
+		}
+		else wall = true;
+	}
+	wall = false;
+	prevCords = gridPos;
+
+	while (!wall) //East.
+	{
+		if (prevCords.first < grid.sizeX - 1)
+		{
+			myCords = std::pair<int, int>(prevCords.first + 1, prevCords.second);
+			if (!grid.wallMap[prevCords][nodes[prevCords]->getSide(nodes[myCords])]->active)
+			{
+				if (!seenTiles[myCords])
+				{
+					visibleTiles.emplace_back(myCords);
+					prevCords = myCords;
+				}
+				else wall = true;
+			}
+			else wall = true;
+		}
+		else wall = true;
+	}
+	wall = false;
+	prevCords = gridPos;
+
+	while (!wall) //South.
+	{
+		if (prevCords.second < grid.sizeY - 1)
+		{
+			myCords = std::pair<int, int>(prevCords.first, prevCords.second + 1);
+			if (!grid.wallMap[prevCords][nodes[prevCords]->getSide(nodes[myCords])]->active)
+			{
+				if (!seenTiles[myCords])
+				{
+					visibleTiles.emplace_back(myCords);
+					prevCords = myCords;
+				}
+				else wall = true;
+			}
+			else wall = true;
+		}
+		else wall = true;
+	}
+
+	wall = false;
+	prevCords = gridPos;
+
+	while (!wall) //West.
+	{
+		if (prevCords.first > 0)
+		{
+			myCords = std::pair<int, int>(prevCords.first - 1, prevCords.second);
+			if (!grid.wallMap[prevCords][nodes[prevCords]->getSide(nodes[myCords])]->active)
+			{
+				if (!seenTiles[myCords])
+				{
+					visibleTiles.emplace_back(myCords);
+					prevCords = myCords;
+				}
+				else wall = true;
+			}
+			else wall = true;
+		}
+		else wall = true;
+	}
+
+
+	for (int i = 0; i < visibleTiles.size(); i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			robotWallMap[visibleTiles[i]][j]->active = grid.wallMap[visibleTiles[i]][j]->active;
+			if (!traversedTiles[visibleTiles[i]])
+			{
+				grid.tileMap[visibleTiles[i]]->color = sf::Color(255, 165, 0, 255);
+				grid.tileMap[visibleTiles[i]]->shape.setFillColor(sf::Color(255, 165, 0, 255));
+			}
+		}
+		seenTiles[visibleTiles[i]] = true;
+
+	}
+}
+
+
 bool Robot1::pathSolvingFloodFill(Grid& grid)
 {
 	//
@@ -385,4 +561,20 @@ void Robot1::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_p
 			grid.tileMap[gridPos]->shape.setFillColor(sf::Color::Red);
 		}
 	}
+}
+
+int Robot1::instantMovement(Grid& grid)
+{
+	unsigned int tilesVisited = 0;
+	while (gridPos != grid.startAndEndCords.second)
+	{
+		instantUpdateWallMap(grid);
+		pathSolvingFloodFill(grid);
+		movingDirection = getDirection(grid);
+		setFuturePosition();
+		instantMove();
+		//std::cout << gridPos.first << ", " << gridPos.second << std::endl;
+		tilesVisited++;
+	}
+	return tilesVisited;
 }

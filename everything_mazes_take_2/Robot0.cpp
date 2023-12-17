@@ -159,6 +159,22 @@ void Robot0::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_p
 	}
 }
 
+int Robot0::instantMovement(Grid& grid)
+{
+	unsigned int tilesVisited = 0;
+	while (gridPos != grid.startAndEndCords.second)
+	{
+		updateAccesiblity(grid);
+		movingDirection = depthFirstGetDirection(grid);
+		setFuturePosition();
+		instantMove();
+		//std::cout << gridPos.first << ", " << gridPos.second << std::endl;
+		tilesVisited++;
+	}
+	return tilesVisited;
+}
+
+
 void Robot0::draw(sf::RenderWindow* window)
 {
 	window->draw(shape);

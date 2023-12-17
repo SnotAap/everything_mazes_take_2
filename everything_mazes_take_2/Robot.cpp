@@ -143,6 +143,46 @@ bool Robot::moveWest(microTime deltaTime)
 	}
 }
 
+void Robot::instantMoveNorth()
+{
+	gridPos.second--;
+}
+
+void Robot::instantMoveEast()
+{
+	gridPos.first++;
+}
+
+void Robot::instantMoveSouth()
+{
+	gridPos.second++;
+}
+
+void Robot::instantMoveWest()
+{
+	gridPos.first--;
+}
+
+void Robot::instantMove()
+{
+	switch (movingDirection)
+	{
+	case North:
+		instantMoveNorth();
+		break;
+	case East:
+		instantMoveEast();
+		break;
+	case South:
+		instantMoveSouth();
+		break;
+	case West:
+		instantMoveWest();
+		break;
+	}
+
+}
+
 void Robot::setFuturePosition()
 {
 	switch (movingDirection)
@@ -184,6 +224,9 @@ bool Robot::move(microTime deltaTime)
 	return false;
 }
 
+
+
+
 void Robot::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList) 
 {	
 	
@@ -203,6 +246,23 @@ void Robot::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_pt
 			moving = false;
 		}
 	}
+}
+
+int Robot::instantMovement(Grid& grid)
+{
+	unsigned int tilesVisited = 0;
+	while (gridPos != grid.startAndEndCords.second)
+	{
+		updateAccesiblity(grid);
+
+		movingDirection = accesibleTiles[rand() % accesibleTiles.size()];
+		setFuturePosition();
+		instantMove();		
+		//std::cout << gridPos.first << ", " << gridPos.second << std::endl;
+		tilesVisited++;
+	}
+	return tilesVisited;
+
 }
 
 void Robot::draw(sf::RenderWindow* window)

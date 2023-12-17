@@ -18,9 +18,18 @@ public:
 	std::map<cordinates, std::shared_ptr<Node>> setupNodes(Grid& grid);
 	void setupWalls(Grid& grid, std::vector<std::shared_ptr<Object>>& renderList);
 	void updateWallMap(Grid& grid, std::vector<std::shared_ptr<Object>>& renderList);
+	void instantSetupWalls(Grid& grid);
+	void instantUpdateWallMap(Grid& grid);
+
 	bool pathSolvingFloodFill(Grid& grid);
 	int getDirection(Grid& grid);
 	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList) override;
+	
+	virtual int instantMovement(Grid& grid) override;
+
+	
+	
+	
 	virtual void draw(sf::RenderWindow* window) override;
 	
 };

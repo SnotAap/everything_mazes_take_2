@@ -15,12 +15,17 @@ microTime deltaTime;
 sf::Mouse myMouse;
 sf::Font font;
 
+
+
 int main()
 {    
     QueryPerformanceFrequency(&frequency);
     srand((unsigned int)getMicroTime());    
+    Console myConsole;
+    myConsole.pollCommands();
+    myConsole.excecuteInstructions();
+    myConsole.returnStats();
     Grid grid(sizeX, sizeY);
-    
     UI myUI(grid, font, renderList);
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Mazes!");
 
@@ -41,6 +46,7 @@ int main()
         myUI.checkButtonsPressed(myMouse);
         myUI.checkButtonsHoverd(myMouse);  
               
+        
         int action = myUI.checkButtonsPressed(myMouse);
         myUI.buttonAction(font, state, action, grid, robotList, solve);
         //myUI.ButtonManager(state);

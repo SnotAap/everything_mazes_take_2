@@ -31,6 +31,7 @@
 #include "Robot0.h"
 #include "Robot1.h"
 #include "UI.h"
+#include "consoleCommands.h"
 
 
 
