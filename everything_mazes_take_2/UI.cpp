@@ -311,7 +311,7 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		break;
 	}
 	case 20:
-		//std:: cout << "GridSize: " << grid.sizeX << ", " << grid.sizeY << " length of shortest path: " << pathSolvingAStar(grid, grid.renderList).size();
+		std::cout << pathSolvingAStar(grid, grid.renderList).size() << std::endl;;
 
 		break;
 	case 21:

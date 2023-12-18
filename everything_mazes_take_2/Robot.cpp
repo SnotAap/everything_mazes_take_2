@@ -250,7 +250,7 @@ void Robot::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_pt
 
 int Robot::instantMovement(Grid& grid)
 {
-	unsigned int tilesVisited = 0;
+	unsigned int tilesVisited = 1;
 	while (gridPos != grid.startAndEndCords.second)
 	{
 		updateAccesiblity(grid);

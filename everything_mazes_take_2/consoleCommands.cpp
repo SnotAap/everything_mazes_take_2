@@ -192,7 +192,7 @@ void Console::excecuteInstructions()
 				}
 				
 
-				lengthOfPathRecursive.emplace_back(pathSolvingAStar(grid, grid.renderList).size());
+				lengthOfPathRecursive.emplace_back(pathSolvingAStar(grid, grid.renderList).size() + 1);
 
 			}
 			if (primsMaze)
@@ -241,7 +241,7 @@ void Console::excecuteInstructions()
 				}
 
 
-				lengthOfPathPrims.emplace_back(pathSolvingAStar(grid, grid.renderList).size());
+				lengthOfPathPrims.emplace_back(pathSolvingAStar(grid, grid.renderList).size() + 1);
 
 			}
 		}
@@ -255,26 +255,26 @@ void Console::returnStats()
 
 	if (recursiveMaze)
 	{
-		std::cout << "Recursive: average length of path: " << average(lengthOfPathRecursive) << " min length of path: " << min_(lengthOfPathRecursive) << " max length of path: " << max_(lengthOfPathRecursive) << std::endl;
-		std::cout << "Recursive: average time of maze generation in millis: " << average(deltaTimeRecursive) << " min length of maze generation in millis: " << min_(deltaTimeRecursive) << " max length of maze generation in millis: " << max_(deltaTimeRecursive) << std::endl;
+		std::cout << "Recursive: average length of path: " << average(lengthOfPathRecursive) << ". Minimal length of path: " << min_(lengthOfPathRecursive) << " Maximum length of path: " << max_(lengthOfPathRecursive) << std::endl;
+		std::cout << "Recursive: average time of maze generation in millis: " << average(deltaTimeRecursive) << ". Minimal length of maze generation in millis: " << min_(deltaTimeRecursive) << " Maximum length of maze generation in millis: " << max_(deltaTimeRecursive) << std::endl;
 			
 		if(robotSolve)
 		{
 			std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobotRecursive);
-			std::cout << "Recursive, Robot: average percentage of correctness: " << average(percentage) << " min percentage of correctness: " << min_(percentage) << " max percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Recursive, Robot: average time of maze solving in millis: " << average(deltaTimeRobotRecursive) << " min length of maze solving in millis: " << min_(deltaTimeRobotRecursive) << " max length of maze solving in millis: " << max_(deltaTimeRobotRecursive) << std::endl;
+			std::cout << "Recursive, Robot: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+			std::cout << "Recursive, Robot: average time of maze solving in millis: " << average(deltaTimeRobotRecursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobotRecursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobotRecursive) << std::endl;
 		}				
 		if(robot0Solve)
 		{
 			std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobot0Recursive);
-			std::cout << "Recursive, Robot0: average percentage of correctness: " << average(percentage) << " min percentage of correctness: " << min_(percentage) << " max percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Recursive, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Recursive) << " min length of maze solving in millis: " << min_(deltaTimeRobot0Recursive) << " max length of maze solving in millis: " << max_(deltaTimeRobot0Recursive) << std::endl;
+			std::cout << "Recursive, Robot0: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+			std::cout << "Recursive, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Recursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot0Recursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot0Recursive) << std::endl;
 		}
 		if(robot1Solve)
 		{
 			std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobot1Recursive);
-			std::cout << "Recursive, Robot1: average percentage of correctness: " << average(percentage) << " min percentage of correctness: " << min_(percentage) << " max percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Recursive, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Recursive) << " min length of maze solving in millis: " << min_(deltaTimeRobot1Recursive) << " max length of maze solving in millis: " << max_(deltaTimeRobot1Recursive) << std::endl;
+			std::cout << "Recursive, Robot1: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+			std::cout << "Recursive, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Recursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot1Recursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot1Recursive) << std::endl;
 		}
 
 			
@@ -284,26 +284,26 @@ void Console::returnStats()
 
 	if (primsMaze)
 	{
-		std::cout << "Prims: average length of path: " << average(lengthOfPathPrims) << " min length of path: " << min_(lengthOfPathPrims) << " max length of path: " << max_(lengthOfPathPrims) << std::endl;
-		std::cout << "Prims: average time of maze generation in millis: " << average(deltaTimePrims) << " min length of maze generation in millis: " << min_(deltaTimePrims) << " max length of maze generation in millis: " << max_(deltaTimePrims) << std::endl;
+		std::cout << "Prims: average length of path: " << average(lengthOfPathPrims) << ". Minimal length of path: " << min_(lengthOfPathPrims) << " Maximum length of path: " << max_(lengthOfPathPrims) << std::endl;
+		std::cout << "Prims: average time of maze generation in millis: " << average(deltaTimePrims) << ". Minimal length of maze generation in millis: " << min_(deltaTimePrims) << " Maximum length of maze generation in millis: " << max_(deltaTimePrims) << std::endl;
 	
 		if(robotSolve)
 		{
 			std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobotPrims);
-			std::cout << "Prims, Robot: average percentage of correctness: " << average(percentage) << " min percentage of correctness: " << min_(percentage) << " max percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Prims, Robot: average time of maze solving in millis: " << average(deltaTimeRobotPrims) << " min length of maze solving in millis: " << min_(deltaTimeRobotPrims) << " max length of maze solving in millis: " << max_(deltaTimeRobotPrims) << std::endl;
+			std::cout << "Prims, Robot: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+			std::cout << "Prims, Robot: average time of maze solving in millis: " << average(deltaTimeRobotPrims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobotPrims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobotPrims) << std::endl;
 		}
 		if(robot0Solve)
 		{
 			std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobot0Prims);
-			std::cout << "Prims, Robot0: average percentage of correctness: " << average(percentage) << " min percentage of correctness: " << min_(percentage) << " max percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Prims, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Prims) << " min length of maze solving in millis: " << min_(deltaTimeRobot0Prims) << " max length of maze solving in millis: " << max_(deltaTimeRobot0Prims) << std::endl;
+			std::cout << "Prims, Robot0: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+			std::cout << "Prims, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Prims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot0Prims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot0Prims) << std::endl;
 		}
 		if(robot1Solve)
 		{
 			std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobot1Prims);
-			std::cout << "Prims, Robot1: average percentage of correctness: " << average(percentage) << " min percentage of correctness: " << min_(percentage) << " max percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Prims, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Prims) << " min length of maze solving in millis: " << min_(deltaTimeRobot1Prims) << " max length of maze solving in millis: " << max_(deltaTimeRobot1Prims) << std::endl;
+			std::cout << "Prims, Robot1: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+			std::cout << "Prims, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Prims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot1Prims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot1Prims) << std::endl;
 		}
 
 	}
