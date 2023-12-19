@@ -3,6 +3,8 @@
 
 Robot0::Robot0(Grid grid)
 {
+	//speed = float(pow((grid.sizeX * grid.sizeY), 2) / 400000000.0f);
+
 	tileSize = grid.tileMap[grid.startAndEndCords.first]->size.x;
 	size = sf::Vector2f((tileSize / 1.5f), (tileSize / 1.5f));
 	shape.setSize(size);

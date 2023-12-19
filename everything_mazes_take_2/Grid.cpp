@@ -5,8 +5,8 @@ Grid::Grid(int sizeX_, int sizeY_)
 	sizeX = sizeX_;
 	sizeY = sizeY_;
 	tileSize = 50;
-	timerTime = sizeX_ * sizeY_ * 100;
-	timerTime = 0;							
+	//timerTime = sizeX_ * sizeY_ * 200;
+	timerTime = float(30000000.0f / pow((sizeX * sizeY), 2));;
 	timer = timerTime;
 }
 

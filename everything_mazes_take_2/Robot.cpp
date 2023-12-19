@@ -8,6 +8,9 @@ Robot::Robot()
 
 Robot::Robot(Grid grid)
 {
+
+	//speed = float(pow((grid.sizeX * grid.sizeY), 2) / 60000000.0f);
+	//speed = 0.0005;
 	tileSize = grid.tileMap[grid.startAndEndCords.first]->size.x;
 	size = sf::Vector2f((tileSize / 1.5f), (tileSize / 1.5f));
 	shape.setSize(size);
@@ -18,6 +21,7 @@ Robot::Robot(Grid grid)
 	gridPos = grid.startAndEndCords.first;
 	color = sf::Color::Magenta;
 	shape.setFillColor(color);
+	movingDirection = -1;
 }
 
 Robot::~Robot()

@@ -2,6 +2,9 @@
 
 Robot1::Robot1(Grid& grid, sf::Font font_, std::vector<std::shared_ptr<Object>>& renderList)
 {
+	
+	//speed = float(pow((grid.sizeX * grid.sizeY), 2) / 60000000.0f);
+	//speed = 0.0005;
 	tileSize = grid.tileMap[grid.startAndEndCords.first]->size.x;
 	size = sf::Vector2f((tileSize / 1.5f), (tileSize / 1.5f));
 	shape.setSize(size);

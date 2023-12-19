@@ -71,7 +71,7 @@ UI::UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderLis
 	buttons.emplace_back(mazeSelectionButton);
 	std::shared_ptr<Button> mazeGenerationButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, mazeAlgorithmSentence, true);	//25
 	buttons.emplace_back(mazeGenerationButton);
-	std::shared_ptr<Button> robotButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, "choise of virtual robot", true);							//26
+	std::shared_ptr<Button> robotButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, "choice of virtual robot", true);							//26
 	buttons.emplace_back(robotButton);	
 	std::shared_ptr<Button> robotSolvingButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, "solving with virtual robot", true);							//27
 	buttons.emplace_back(robotSolvingButton);
