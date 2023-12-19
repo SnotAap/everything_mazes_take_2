@@ -1,7 +1,10 @@
 #include "Header.h"
 void Button::draw(sf::RenderWindow* window)
 {
-	window->draw(shape);
+	if (!textOnly)
+	{
+		window->draw(shape);
+	}
 	window->draw(text);
 }
 
@@ -24,7 +27,7 @@ Button::Button()
 	shape.setSize(size);
 }
 
-Button::Button(float x_, float y_, float scale, std::string sentence_)
+Button::Button(float x_, float y_, float scale, std::string sentence_, bool textOnly_)
 {	
 	position = sf::Vector2f(x_, y_);
 	shape.setPosition(position);	
@@ -43,7 +46,7 @@ Button::Button(float x_, float y_, float scale, std::string sentence_)
 	shape.setSize(size);	
 	shape.setOrigin(size.x/2, size.y/2);
 	text.setOrigin(shape.getOrigin().x, shape.getOrigin().y);
-	
+	textOnly = textOnly_;
 }
 
 Button::~Button()

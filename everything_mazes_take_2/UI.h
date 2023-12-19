@@ -16,6 +16,8 @@ public:
 	std::vector<std::shared_ptr<Button>> activeButtons;
 	std::vector<std::shared_ptr<Text>> text;
 	std::vector<std::shared_ptr<Text>> activeText;
+	std::string mazeAlgorithmSentence = "maze generation";
+
 	UI();
 	UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderList_);
 	~UI();

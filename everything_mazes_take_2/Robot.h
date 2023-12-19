@@ -11,11 +11,13 @@ public:
 	std::map<cordinates, bool> traversedTiles;
 	cordinates gridPos;
 	float tileSize;
-	float speed = 0.075f;
+	float speed = 0.0005f;
 	//float speed = 10.0f; //dev time
 	std::vector<int> accesibleTiles;
 	bool moving = false;
 	int movingDirection;
+
+	
 
 	Robot();
 	Robot(Grid grid);

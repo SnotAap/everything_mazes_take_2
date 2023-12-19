@@ -10,9 +10,10 @@ public:
 	sf::Text text;
 	std::string fontDirectory = "..\\content\\arial.ttf";
 	bool IsPressed = false;	
+	bool textOnly = false;
 
 	Button();
-	Button(float x_, float y_, float scale, std::string sentence_);
+	Button(float x_, float y_, float scale, std::string sentence_, bool textOnly_ = false);
 	~Button();
 	virtual void draw(sf::RenderWindow* window) override;
 };

@@ -31,11 +31,12 @@ int main()
     UI myUI(grid, font, renderList);
     myConsole.pollLoopCommands(myUI);
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Mazes!");
+    lastTime = getMicroTime();
 
     while (window.isOpen())
     {
         sf::Event event;
-        lastTime = getMicroTime();
+        
 
         while (window.pollEvent(event))
         {   
@@ -47,10 +48,11 @@ int main()
         //
         currentTime = getMicroTime();
         deltaTime = currentTime - lastTime;
+ 
         myUI.mousePressed(event);
         myUI.checkButtonsPressed(myMouse);
         myUI.checkButtonsHoverd(myMouse);  
-              
+
         if (myUI.loop)
         {
             myConsole.excecuteLoopInstructions(deltaTime, font, state, grid, robotList, solve, myUI);
@@ -60,7 +62,7 @@ int main()
         myUI.buttonAction(font, state, action, grid, robotList, solve);
         //myUI.ButtonManager(state);
         //
-
+        
 
         myUI.activeButtons.clear();
         if (myConsole.loopCommandGiven && !myUI.loop)
@@ -81,18 +83,20 @@ int main()
             myUI.activeButtons.emplace_back(myUI.buttons[8]);
             myUI.activeButtons.emplace_back(myUI.buttons[9]);
             myUI.activeButtons.emplace_back(myUI.buttons[10]);
+            myUI.activeButtons.emplace_back(myUI.buttons[23]);
 
             break;
         case generateChoiseState:
             myUI.activeButtons.emplace_back(myUI.buttons[11]);
             myUI.activeButtons.emplace_back(myUI.buttons[12]);
             myUI.activeButtons.emplace_back(myUI.buttons[21]);
-
+            myUI.activeButtons.emplace_back(myUI.buttons[24]);
             break;
         case generateState:
             myUI.activeButtons.emplace_back(myUI.buttons[13]);
             myUI.activeButtons.emplace_back(myUI.buttons[14]);
             myUI.activeButtons.emplace_back(myUI.buttons[21]);
+            myUI.activeButtons.emplace_back(myUI.buttons[25]);
             
             if (grid.removeWalls(deltaTime))
             {
@@ -105,11 +109,12 @@ int main()
             myUI.activeButtons.emplace_back(myUI.buttons[16]);
             myUI.activeButtons.emplace_back(myUI.buttons[17]);
             myUI.activeButtons.emplace_back(myUI.buttons[18]);
-            
+            myUI.activeButtons.emplace_back(myUI.buttons[26]);
             break;
         case solvingState:
             myUI.activeButtons.emplace_back(myUI.buttons[19]);
             myUI.activeButtons.emplace_back(myUI.buttons[20]);
+            myUI.activeButtons.emplace_back(myUI.buttons[27]);
             
 
             for (int i = 0; i < robotList.size(); i++)

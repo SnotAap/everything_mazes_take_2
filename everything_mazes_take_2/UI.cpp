@@ -64,9 +64,22 @@ UI::UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderLis
 	buttons.emplace_back(backButton);
 	std::shared_ptr<Button> resumeButton = std::make_shared<Button>(1750.0f, 300.0f, 1.0f, "resume loop");
 	buttons.emplace_back(resumeButton);
+	
+	std::shared_ptr<Button> gridSelectionButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, "grid selection", true);								//23
+	buttons.emplace_back(gridSelectionButton);
+	std::shared_ptr<Button> mazeSelectionButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, "maze generation selection", true);								//24
+	buttons.emplace_back(mazeSelectionButton);
+	std::shared_ptr<Button> mazeGenerationButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, mazeAlgorithmSentence, true);	//25
+	buttons.emplace_back(mazeGenerationButton);
+	std::shared_ptr<Button> robotButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, "choise of virtual robot", true);							//26
+	buttons.emplace_back(robotButton);	
+	std::shared_ptr<Button> robotSolvingButton = std::make_shared<Button>(885.0f, 18.0f, 1.0f, "solving with virtual robot", true);							//27
+	buttons.emplace_back(robotSolvingButton);
+	
+	
+	
 	//don't forget to write the button action in the associated function (void buttonAction(int action)).
 }
-
 //void UI::ButtonManager(int state)
 //{
 //	switch (state)
@@ -247,13 +260,18 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 	case 11:
 		//grid.resetGrid();
 		grid.recursiveBacktrackingMaze();
+		mazeAlgorithmSentence = "maze generation using recursive backtracking algorithm";
+		buttons[25]->sentence = mazeAlgorithmSentence;
+		buttons[25]->text.setString(buttons[25]->sentence);
 		buttons[action]->IsPressed = false;
 		state++;
 		break;
 	case 12:
 		//grid.resetGrid();
 		grid.primsMaze();
-		
+		mazeAlgorithmSentence = "maze generation using Prims algorithm";
+		buttons[25]->sentence = mazeAlgorithmSentence;
+		buttons[25]->text.setString(buttons[25]->sentence);
 		buttons[action]->IsPressed = false;
 		state++;
 		break;

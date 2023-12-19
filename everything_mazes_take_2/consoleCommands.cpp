@@ -137,14 +137,31 @@ bool Console::pollLoopCommands(UI& UI)
 {
 	std::string response;
 
-	std::cout << "would you like to loop the program?(yes/no)" << std::endl;
+	std::cout << "would you like to loop the program?(yes/no/default)" << std::endl;
 	std::cin >> response;
-	if (response == "yes")
+	if (response == "yes" || response == "default")
 	{
 		loopCommandGiven = true;
 		UI.loop = true;
 	}
 	else return loopCommandGiven;
+	if (response == "default")
+	{
+		minXSize = 5;
+		maxXSize = 50;
+		minYSize = 5;
+		maxYSize = 50;
+		recursiveMazeGen = true;
+		randomMazeGen.emplace_back(11);
+		primsMazeGen = true;
+		randomMazeGen.emplace_back(12);
+		robot0LoopSolve = true;
+		randomRobot.emplace_back(16);
+		robot1LoopSolve = true;
+		randomRobot.emplace_back(17);
+		return loopCommandGiven;
+	}
+
 	std::cout << "what should the min x size be?" << std::endl;
 	std::cin >> minXSize;
 	std::cout << "what should the max x size be?" << std::endl;
