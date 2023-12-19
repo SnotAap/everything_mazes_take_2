@@ -30,7 +30,7 @@ T Console::min_(std::vector<T> vector)
 	bool swapp = true;
 	while (swapp) {
 		swapp = false;
-		for (size_t i = 0; i < vector.size() - 1; i++) {
+		for (int i = 0; i < vector.size() - 1; i++) {
 			if (vector[i] > vector[i + 1]) {
 				vector[i] += vector[i + 1];
 				vector[i + 1] = vector[i] - vector[i + 1];
@@ -48,7 +48,7 @@ T Console::max_(std::vector<T> vector)
 	bool swapp = true;
 	while (swapp) {
 		swapp = false;
-		for (size_t i = 0; i < vector.size() - 1; i++) {
+		for (int i = 0; i < vector.size() - 1; i++) {
 			if (vector[i] > vector[i + 1]) {
 				vector[i] += vector[i + 1];
 				vector[i + 1] = vector[i] - vector[i + 1];
@@ -77,7 +77,7 @@ std::vector<double> Console::percentageOf(std::vector<T> numerator, std::vector<
 	return percentageList;
 }
 
-void Console::pollCommands()
+void Console::pollDataCommands()
 {
 	std::string response;
 
@@ -130,9 +130,142 @@ void Console::pollCommands()
 	std::cout << "how many times should this program repeat it self?" << std::endl;
 	std::cin >> ittorations;
 
+
 }
 
-void Console::excecuteInstructions()
+bool Console::pollLoopCommands(UI& UI)
+{
+	std::string response;
+
+	std::cout << "would you like to loop the program?(yes/no)" << std::endl;
+	std::cin >> response;
+	if (response == "yes")
+	{
+		loopCommandGiven = true;
+		UI.loop = true;
+	}
+	else return loopCommandGiven;
+	std::cout << "what should the min x size be?" << std::endl;
+	std::cin >> minXSize;
+	std::cout << "what should the max x size be?" << std::endl;
+	std::cin >> maxXSize;
+	std::cout << "what should the min y size be?" << std::endl;
+	std::cin >> minYSize;
+	std::cout << "what should the max y size be?" << std::endl;
+	std::cin >> maxYSize;
+
+	std::cout << "whould you like a recursiveBacktracking Maze? (yes/no)" << std::endl;
+	std::cin >> response;
+	if (response == "yes")
+	{
+		recursiveMazeGen = true;
+		randomMazeGen.emplace_back(11);
+	}
+	response.clear();
+	std::cout << "whould you like a prim's Maze? (yes/no)" << std::endl;
+	std::cin >> response;
+	if (response == "yes")
+	{
+		primsMazeGen = true;
+		randomMazeGen.emplace_back(12);
+	}
+	response.clear();
+	std::cout << "would you like the maze(s) to be solved by robot? (yes/no)" << std::endl;
+	std::cin >> response;
+	if (response == "yes")
+	{
+		robotLoopSolve = true;
+		randomRobot.emplace_back(15);
+	}
+	response.clear();
+	std::cout << "would you like the maze(s) to be solved by robot0? (yes/no)" << std::endl;
+	std::cin >> response;
+	if (response == "yes")
+	{
+		robot0LoopSolve = true;
+		randomRobot.emplace_back(16);
+	}
+	response.clear();
+	std::cout << "would you like the maze(s) to be solved by robot1? (yes/no)" << std::endl;
+	std::cin >> response;
+	if (response == "yes")
+	{
+		robot1LoopSolve = true;
+		randomRobot.emplace_back(17);
+	}
+	response.clear();
+	return loopCommandGiven;
+}
+
+void Console::excecuteLoopInstructions(microTime deltaTime, sf::Font font, int& state, Grid& grid, std::vector<std::pair<std::shared_ptr<Robot>, bool>>& robotList, bool& solve, UI& UI)
+{	
+	if (stateSwitch > 0)
+	{
+		stateSwitch -= (int)deltaTime;
+	}
+	else if(UI.loop && UI.resumeloop)
+	{
+		int action = 19;
+		switch (state)
+		{
+		case startState:
+			grid.sizeX = rand() % (maxXSize - minXSize + 1) + minXSize;
+			grid.sizeY = rand() % (maxYSize - minYSize + 1) + minYSize;
+			stateSwitch = stateTimer;
+			action = 0;
+			UI.buttonAction(font, state, action, grid, robotList, solve);
+			break;
+		case generateChoiseState:
+		{
+			int rand_ = rand() % ((randomMazeGen.size() - 1) - (0) + 1) + 0;
+			action = randomMazeGen[rand_];
+			UI.buttonAction(font, state, action, grid, robotList, solve);
+			stateSwitch = stateTimer;
+			UI.resumeloop = false;
+		}
+			break;
+		case generateState:
+			
+			//action = 14;
+			//UI.buttonAction(font, state, action, grid, robotList, solve);
+			//stateSwitch = stateTimer;
+			//UI.resumeloop = false;
+			
+
+			break;
+		case solveState:			
+		{
+			int rand_ = rand() % ((randomRobot.size() - 1) - (0) + 1) + 0;
+			action = randomRobot[rand_];
+			UI.buttonAction(font, state, action, grid, robotList, solve);
+			UI.buttonAction(font, state, 18, grid, robotList, solve);
+			stateSwitch = stateTimer;
+			UI.resumeloop = false;
+		}
+			break;
+		case solvingState:
+			pathSolvingAStar(grid, grid.renderList);
+			state++;
+			stateSwitch = stateTimer;
+			break;
+		case solvedState:
+			action = 19;
+			UI.buttonAction(font, state, action, grid, robotList, solve);
+			break;
+		}
+		
+	}
+	
+
+
+
+
+
+	
+
+}
+
+void Console::excecuteDataInstructions()
 {
 	if (commandGiven)
 	{
@@ -162,7 +295,8 @@ void Console::excecuteInstructions()
 					Robot myRobot(grid);
 					
 					pastTime = timeGetTime();
-					int visitedTiles = myRobot.instantMovement(grid);
+					int visitedTiles = 0; 
+					visitedTiles = myRobot.instantMovement(grid);
 					currentTime = timeGetTime();
 					deltaTime = (unsigned int)(currentTime - pastTime);
 					visitedTilesRobotRecursive.emplace_back(visitedTiles);
@@ -173,7 +307,8 @@ void Console::excecuteInstructions()
 					Robot0 myRobot0(grid);
 					
 					pastTime = timeGetTime();
-					int visitedTiles = myRobot0.instantMovement(grid);
+					int visitedTiles = 0; 
+					visitedTiles = myRobot0.instantMovement(grid);
 					currentTime = timeGetTime();
 					deltaTime = (unsigned int)(currentTime - pastTime);
 					visitedTilesRobot0Recursive.emplace_back(visitedTiles);
@@ -184,7 +319,8 @@ void Console::excecuteInstructions()
 					Robot1 myRobot1(grid, myfont, renderList);
 					
 					pastTime = timeGetTime();
-					int visitedTiles = myRobot1.instantMovement(grid);
+					int visitedTiles = 0; 
+					visitedTiles = myRobot1.instantMovement(grid);
 					currentTime = timeGetTime();
 					deltaTime = (unsigned int)(currentTime - pastTime);
 					visitedTilesRobot1Recursive.emplace_back(visitedTiles);
@@ -192,7 +328,8 @@ void Console::excecuteInstructions()
 				}
 				
 
-				lengthOfPathRecursive.emplace_back(pathSolvingAStar(grid, grid.renderList).size() + 1);
+				lengthOfPathRecursive.emplace_back(int(pathSolvingAStar(grid, grid.renderList).size() + 1));
+				
 
 			}
 			if (primsMaze)
@@ -211,7 +348,8 @@ void Console::excecuteInstructions()
 					Robot myRobot(grid);
 					
 					pastTime = timeGetTime();
-					int visitedTiles = myRobot.instantMovement(grid);
+					int visitedTiles = 0; 
+					visitedTiles = myRobot.instantMovement(grid);
 					currentTime = timeGetTime();
 					deltaTime = (unsigned int)(currentTime - pastTime);
 					visitedTilesRobotPrims.emplace_back(visitedTiles);
@@ -222,7 +360,8 @@ void Console::excecuteInstructions()
 					Robot0 myRobot0(grid);
 					
 					pastTime = timeGetTime();
-					int visitedTiles = myRobot0.instantMovement(grid);
+					int visitedTiles = 0; 
+					visitedTiles = myRobot0.instantMovement(grid);
 					currentTime = timeGetTime();
 					deltaTime = (unsigned int)(currentTime - pastTime);
 					visitedTilesRobot0Prims.emplace_back(visitedTiles);
@@ -233,7 +372,8 @@ void Console::excecuteInstructions()
 					Robot1 myRobot1(grid, myfont, renderList);
 					
 					pastTime = timeGetTime();
-					int visitedTiles = myRobot1.instantMovement(grid);
+					int visitedTiles = 0; 
+					visitedTiles = myRobot1.instantMovement(grid);
 					currentTime = timeGetTime();
 					deltaTime = (unsigned int)(currentTime - pastTime);
 					visitedTilesRobot1Prims.emplace_back(visitedTiles);
@@ -241,7 +381,7 @@ void Console::excecuteInstructions()
 				}
 
 
-				lengthOfPathPrims.emplace_back(pathSolvingAStar(grid, grid.renderList).size() + 1);
+				lengthOfPathPrims.emplace_back(int(pathSolvingAStar(grid, grid.renderList).size() + 1));
 
 			}
 		}
@@ -252,59 +392,62 @@ void Console::excecuteInstructions()
 
 void Console::returnStats()
 {
-
-	if (recursiveMaze)
+	if (commandGiven)
 	{
-		std::cout << "Recursive: average length of path: " << average(lengthOfPathRecursive) << ". Minimal length of path: " << min_(lengthOfPathRecursive) << " Maximum length of path: " << max_(lengthOfPathRecursive) << std::endl;
-		std::cout << "Recursive: average time of maze generation in millis: " << average(deltaTimeRecursive) << ". Minimal length of maze generation in millis: " << min_(deltaTimeRecursive) << " Maximum length of maze generation in millis: " << max_(deltaTimeRecursive) << std::endl;
-			
-		if(robotSolve)
+		if (recursiveMaze)
 		{
-			std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobotRecursive);
-			std::cout << "Recursive, Robot: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Recursive, Robot: average time of maze solving in millis: " << average(deltaTimeRobotRecursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobotRecursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobotRecursive) << std::endl;
-		}				
-		if(robot0Solve)
-		{
-			std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobot0Recursive);
-			std::cout << "Recursive, Robot0: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Recursive, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Recursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot0Recursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot0Recursive) << std::endl;
-		}
-		if(robot1Solve)
-		{
-			std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobot1Recursive);
-			std::cout << "Recursive, Robot1: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Recursive, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Recursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot1Recursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot1Recursive) << std::endl;
+			std::cout << "Recursive: average length of path: " << average(lengthOfPathRecursive) << ". Minimal length of path: " << min_(lengthOfPathRecursive) << " Maximum length of path: " << max_(lengthOfPathRecursive) << std::endl;
+			std::cout << "Recursive: average time of maze generation in millis: " << average(deltaTimeRecursive) << ". Minimal length of maze generation in millis: " << min_(deltaTimeRecursive) << " Maximum length of maze generation in millis: " << max_(deltaTimeRecursive) << std::endl;
+
+			if (robotSolve)
+			{
+				std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobotRecursive);
+				std::cout << "Recursive, Robot: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+				std::cout << "Recursive, Robot: average time of maze solving in millis: " << average(deltaTimeRobotRecursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobotRecursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobotRecursive) << std::endl;
+			}
+			if (robot0Solve)
+			{
+				std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobot0Recursive);
+				std::cout << "Recursive, Robot0: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+				std::cout << "Recursive, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Recursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot0Recursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot0Recursive) << std::endl;
+			}
+			if (robot1Solve)
+			{
+				std::vector<double> percentage = percentageOf(lengthOfPathRecursive, visitedTilesRobot1Recursive);
+				std::cout << "Recursive, Robot1: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+				std::cout << "Recursive, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Recursive) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot1Recursive) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot1Recursive) << std::endl;
+			}
+
+
+
+
 		}
 
-			
+		if (primsMaze)
+		{
+			std::cout << "Prims: average length of path: " << average(lengthOfPathPrims) << ". Minimal length of path: " << min_(lengthOfPathPrims) << " Maximum length of path: " << max_(lengthOfPathPrims) << std::endl;
+			std::cout << "Prims: average time of maze generation in millis: " << average(deltaTimePrims) << ". Minimal length of maze generation in millis: " << min_(deltaTimePrims) << " Maximum length of maze generation in millis: " << max_(deltaTimePrims) << std::endl;
 
-		
+			if (robotSolve)
+			{
+				std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobotPrims);
+				std::cout << "Prims, Robot: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+				std::cout << "Prims, Robot: average time of maze solving in millis: " << average(deltaTimeRobotPrims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobotPrims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobotPrims) << std::endl;
+			}
+			if (robot0Solve)
+			{
+				std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobot0Prims);
+				std::cout << "Prims, Robot0: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+				std::cout << "Prims, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Prims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot0Prims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot0Prims) << std::endl;
+			}
+			if (robot1Solve)
+			{
+				std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobot1Prims);
+				std::cout << "Prims, Robot1: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
+				std::cout << "Prims, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Prims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot1Prims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot1Prims) << std::endl;
+			}
+
+		}
 	}
-
-	if (primsMaze)
-	{
-		std::cout << "Prims: average length of path: " << average(lengthOfPathPrims) << ". Minimal length of path: " << min_(lengthOfPathPrims) << " Maximum length of path: " << max_(lengthOfPathPrims) << std::endl;
-		std::cout << "Prims: average time of maze generation in millis: " << average(deltaTimePrims) << ". Minimal length of maze generation in millis: " << min_(deltaTimePrims) << " Maximum length of maze generation in millis: " << max_(deltaTimePrims) << std::endl;
 	
-		if(robotSolve)
-		{
-			std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobotPrims);
-			std::cout << "Prims, Robot: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Prims, Robot: average time of maze solving in millis: " << average(deltaTimeRobotPrims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobotPrims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobotPrims) << std::endl;
-		}
-		if(robot0Solve)
-		{
-			std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobot0Prims);
-			std::cout << "Prims, Robot0: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Prims, Robot0: average time of maze solving in millis: " << average(deltaTimeRobot0Prims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot0Prims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot0Prims) << std::endl;
-		}
-		if(robot1Solve)
-		{
-			std::vector<double> percentage = percentageOf(lengthOfPathPrims, visitedTilesRobot1Prims);
-			std::cout << "Prims, Robot1: average percentage of correctness: " << average(percentage) << ". Minimal percentage of correctness: " << min_(percentage) << " Maximum percentage of correctness: " << max_(percentage) << std::endl;
-			std::cout << "Prims, Robot1: average time of maze solving in millis: " << average(deltaTimeRobot1Prims) << ". Minimal length of maze solving in millis: " << min_(deltaTimeRobot1Prims) << " Maximum length of maze solving in millis: " << max_(deltaTimeRobot1Prims) << std::endl;
-		}
-
-	}
 }

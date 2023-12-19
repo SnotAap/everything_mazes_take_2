@@ -11,7 +11,7 @@ public:
 	std::map<cordinates, bool> traversedTiles;
 	cordinates gridPos;
 	float tileSize;
-	float speed = 0.001f;
+	float speed = 0.075f;
 	//float speed = 10.0f; //dev time
 	std::vector<int> accesibleTiles;
 	bool moving = false;
@@ -37,7 +37,7 @@ public:
 	void instantMove();
 
 	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList);
-	virtual int instantMovement(Grid& grid);
+	virtual unsigned int instantMovement(Grid& grid);
 
 	virtual void draw(sf::RenderWindow* window) override;
 };

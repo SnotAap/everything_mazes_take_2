@@ -147,9 +147,7 @@ std::vector<cordinates> pathSolvingAStar(Grid& grid, std::vector<std::shared_ptr
 		p = p->parent;
 	}
 	
-	
 	//return the solved path
-
 	return path;
 }
 

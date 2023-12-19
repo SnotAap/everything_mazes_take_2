@@ -4,13 +4,15 @@ std::vector<std::shared_ptr<Object>> renderList;
 std::vector<std::pair<std::shared_ptr<Robot>, bool>> robotList;
 
 bool solve = false;
+
+
 int state = 0;
 int sizeX = 20;
 int sizeY = 20;
 
-microTime currentTime;
-microTime lastTime;
-microTime deltaTime;
+microTime currentTime = 0;
+microTime lastTime = 0;
+microTime deltaTime = 0;
 
 sf::Mouse myMouse;
 sf::Font font;
@@ -22,16 +24,19 @@ int main()
     QueryPerformanceFrequency(&frequency);
     srand((unsigned int)getMicroTime());    
     Console myConsole;
-    myConsole.pollCommands();
-    myConsole.excecuteInstructions();
+    myConsole.pollDataCommands();
+    myConsole.excecuteDataInstructions();
     myConsole.returnStats();
     Grid grid(sizeX, sizeY);
     UI myUI(grid, font, renderList);
+    myConsole.pollLoopCommands(myUI);
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Mazes!");
 
     while (window.isOpen())
     {
         sf::Event event;
+        lastTime = getMicroTime();
+
         while (window.pollEvent(event))
         {   
                     
@@ -46,15 +51,25 @@ int main()
         myUI.checkButtonsPressed(myMouse);
         myUI.checkButtonsHoverd(myMouse);  
               
+        if (myUI.loop)
+        {
+            myConsole.excecuteLoopInstructions(deltaTime, font, state, grid, robotList, solve, myUI);
+        }
         
         int action = myUI.checkButtonsPressed(myMouse);
         myUI.buttonAction(font, state, action, grid, robotList, solve);
         //myUI.ButtonManager(state);
         //
+
+
+        myUI.activeButtons.clear();
+        if (myConsole.loopCommandGiven && !myUI.loop)
+        {
+            myUI.activeButtons.emplace_back(myUI.buttons[22]);
+        }
         switch (state)
         {
         case startState:
-            myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[0]);
             myUI.activeButtons.emplace_back(myUI.buttons[1]);
             myUI.activeButtons.emplace_back(myUI.buttons[2]);
@@ -69,14 +84,12 @@ int main()
 
             break;
         case generateChoiseState:
-            myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[11]);
             myUI.activeButtons.emplace_back(myUI.buttons[12]);
             myUI.activeButtons.emplace_back(myUI.buttons[21]);
 
             break;
         case generateState:
-            myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[13]);
             myUI.activeButtons.emplace_back(myUI.buttons[14]);
             myUI.activeButtons.emplace_back(myUI.buttons[21]);
@@ -84,10 +97,10 @@ int main()
             if (grid.removeWalls(deltaTime))
             {
                 state++;
+                myUI.resumeloop = true;
             }
             break;
         case solveState:
-            myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[15]);
             myUI.activeButtons.emplace_back(myUI.buttons[16]);
             myUI.activeButtons.emplace_back(myUI.buttons[17]);
@@ -95,7 +108,6 @@ int main()
             
             break;
         case solvingState:
-            myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[19]);
             myUI.activeButtons.emplace_back(myUI.buttons[20]);
             
@@ -104,12 +116,16 @@ int main()
             {
                 if (robotList[i].second && robotList[i].first->gridPos != grid.startAndEndCords.second)
                 {
-                    robotList[i].first->movement(grid, deltaTime, renderList);                                            
+                    robotList[i].first->movement(grid, deltaTime, renderList); 
+                }
+                if (myUI.loop && robotList[i].second && robotList[i].first->gridPos == grid.startAndEndCords.second)
+                {
+                    myUI.resumeloop = true;
+                    myUI.buttonAction(font, state, 20, grid, robotList, solve);
                 }
             }
             break;
         case solvedState:
-            myUI.activeButtons.clear();
             myUI.activeButtons.emplace_back(myUI.buttons[19]);
             
             break; 

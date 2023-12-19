@@ -9,8 +9,8 @@ public:
 	#define solvingState 4
 	#define solvedState 5
 
-
-	
+	bool loop = false;
+	bool resumeloop = true;
 
 	std::vector<std::shared_ptr<Button>> buttons;
 	std::vector<std::shared_ptr<Button>> activeButtons;

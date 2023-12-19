@@ -25,7 +25,7 @@ public:
 	int getDirection(Grid& grid);
 	virtual void movement(Grid& grid, microTime deltaTime, std::vector<std::shared_ptr<Object>>& renderList) override;
 	
-	virtual int instantMovement(Grid& grid) override;
+	virtual unsigned int instantMovement(Grid& grid) override;
 
 	
 	

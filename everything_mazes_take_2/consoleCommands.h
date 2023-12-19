@@ -3,6 +3,10 @@
 class Console
 {
 private:
+
+	//data variables
+
+
 	std::string command;
 	bool commandGiven = false;
 	unsigned int gridSizeX = 0;
@@ -37,6 +41,32 @@ private:
 		
 	std::vector<std::pair<short, Robot>> robots;
 
+	//loop variables
+	int stateTimer = 10000;
+	int stateSwitch = stateTimer;
+
+	
+
+	unsigned int minXSize = 0; 
+	unsigned int maxXSize = 0;	
+	unsigned int minYSize = 0;
+	unsigned int maxYSize = 0;
+
+	bool recursiveMazeGen = false;
+	bool primsMazeGen = false;
+
+	std::vector<int> randomMazeGen;
+
+	bool robotLoopSolve = false;
+	bool robot0LoopSolve = false;
+	bool robot1LoopSolve = false;
+
+	std::vector<int> randomRobot;
+
+
+
+
+
 	void resetGrid(Grid& grid);
 	template <typename T>
 	T average(std::vector<T> vector);
@@ -50,9 +80,13 @@ private:
 
 public:
 
+	bool loopCommandGiven = false;
+
 	Console();
-	void pollCommands();
-	void excecuteInstructions();
+	void pollDataCommands();
+	bool pollLoopCommands(UI& UI);
+	void excecuteDataInstructions();
+	void excecuteLoopInstructions(microTime deltaTime, sf::Font font, int& state, Grid& grid, std::vector<std::pair<std::shared_ptr<Robot>, bool>>& robotList, bool& solve, UI& UI);
 	void returnStats();
 
 }; 

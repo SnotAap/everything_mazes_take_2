@@ -62,7 +62,8 @@ UI::UI(Grid grid, sf::Font font, std::vector<std::shared_ptr<Object>>& renderLis
 	buttons.emplace_back(solveAStar);
 	std::shared_ptr<Button> backButton = std::make_shared<Button>(1750.0f, 50.0f, 1.0f, "back");
 	buttons.emplace_back(backButton);
-	
+	std::shared_ptr<Button> resumeButton = std::make_shared<Button>(1750.0f, 300.0f, 1.0f, "resume loop");
+	buttons.emplace_back(resumeButton);
 	//don't forget to write the button action in the associated function (void buttonAction(int action)).
 }
 
@@ -157,7 +158,9 @@ int UI::checkButtonsPressed(sf::Mouse mouse)
 					{
 						if (activeButtons[i] == buttons[j])
 						{
+							loop = false;
 							return j;
+
 						}
 					}
 				}						
@@ -311,12 +314,17 @@ void UI::buttonAction(sf::Font font, int& state, int action, Grid& grid, std::ve
 		break;
 	}
 	case 20:
-		std::cout << pathSolvingAStar(grid, grid.renderList).size() << std::endl;;
+		pathSolvingAStar(grid, grid.renderList);
 
 		break;
 	case 21:
 		state--;
 		break;
+	case 22:
+		loop = true;
+		resumeloop = true;
+		break;
+
 	}
 
 

@@ -563,7 +563,7 @@ void Robot1::movement(Grid& grid, microTime deltaTime, std::vector<std::shared_p
 	}
 }
 
-int Robot1::instantMovement(Grid& grid)
+unsigned int Robot1::instantMovement(Grid& grid)
 {
 	unsigned int tilesVisited = 1;
 	while (gridPos != grid.startAndEndCords.second)
@@ -573,7 +573,7 @@ int Robot1::instantMovement(Grid& grid)
 		movingDirection = getDirection(grid);
 		setFuturePosition();
 		instantMove();
-		//std::cout << gridPos.first << ", " << gridPos.second << std::endl;
+		
 		tilesVisited++;
 	}
 	return tilesVisited;
